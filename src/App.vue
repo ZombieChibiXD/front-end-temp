@@ -6,6 +6,9 @@
         <Navbar/>
       </div>
       <!-- ./Navbar -->
+      <div class="messages">
+        <Messages lists="msgs" />
+      </div>
 
       <!-- Content -->
       <section> 
@@ -66,11 +69,12 @@ footer {
 
 </style>
 <script>
-import Navbar from '@/views/layout/Navbar.vue'
-import Footers from '@/views/layout/Footers.vue'
+import Navbar from '@/components/layout/Navbar.vue'
+import Footers from '@/components/layout/Footers.vue'
+import Messages from '@/components/layout/Messages.vue'
 export default {
   components:{
-    Navbar, Footers
+    Navbar, Footers, Messages
   }
 }
 </script>
