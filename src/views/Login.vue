@@ -33,8 +33,7 @@
                 </div>                 
             </div>            
         </div>
-    </div> -->
-    
+    </div> -->    
     <div class="container">
         <div>&nbsp;</div>
         <div class="row mx-auto mt-lg-3 mt-md-4 mt-sm-5" style="width:65vw;">
@@ -75,6 +74,7 @@
 
 
 <script>
+// import { user as userStorage } from '@/_services'
 export default {
     data () {
         return {
@@ -95,7 +95,7 @@ export default {
             this.submitted = true;
             const { credential, password } = this;
             if (credential && password) {
-                // this.login({ credential, password })
+                // userStorage.login({ credential, password })
             }
         }
     }

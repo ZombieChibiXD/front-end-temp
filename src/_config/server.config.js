@@ -1,7 +1,7 @@
 function ServerConfiguration(){
     let me = this;
-    me.serverLocation   = 'localhost:8000/'
-    me.nameStorageField = 'mywebstoragefield'
+    me.serverLocation   = () =>'localhost:8001/';
+    me.nameStorageField = () =>'mywebstoragefield';
 
     me.postArticle  = ()    => 'api/article';
     me.idArticle    = (id)  => 'api/article/'+id;
@@ -18,6 +18,11 @@ function ServerConfiguration(){
     me.oauthTokenRef= ()    => 'oauth/token/refresh';
     me.oauthTokens  = ()    => 'oauth/tokens';
     me.oauthTokensId= (id)  => 'oauth/tokens/'+id;    
+
+    me.authSignUp   = ()    => 'api/auth/signup';
+    me.authLogIn    = ()    => 'api/auth/login';
+    me.authLogOut   = ()    => 'api/auth/logout';
+    me.authUser     = ()    => 'api/auth/user';
 }
 const serveConf = new ServerConfiguration;
 

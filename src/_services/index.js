@@ -1,2 +1,2 @@
-export * from './user.service';
-export * from './axios.service';
+export * from './user.service';     //user
+export * from './axios.service';    //axiosCred
