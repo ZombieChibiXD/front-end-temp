@@ -63,7 +63,13 @@
                         :class="{ 'is-invalid': submitted && !password }" placeholder="Password" aria-describedby="password">
                         <small v-show="submitted && !password" class="invalid-feedback">Password is required</small>
                     </div>
-                    <input type="submit" value="Log In" class="btn btn-primary">
+                    <div class="form-group">
+                        <input type="checkbox" v-model="remember_me" name="remember_me"
+                         aria-describedby="remember_me">
+                        
+                        <label for="remember_me">Remember me</label>
+                    </div>
+                    <input type="submit" :class="{ 'disabled': submitted }" value="Login" class="btn btn-primary">
                 </form>
                 <small>Don't have an account? <a href="#"><strong>Sign Up!</strong></a></small>
             </div>
@@ -74,12 +80,14 @@
 
 
 <script>
-// import { user as userStorage } from '@/_services'
+import userStorage from '@/_services/user.service'
+
 export default {
     data () {
         return {
             credential: '',
             password: '',
+            remember_me:false,
             submitted: false
         }
     },
@@ -93,11 +101,14 @@ export default {
     methods: {
         handleSubmit (e) {
             this.submitted = true;
-            const { credential, password } = this;
+            const { credential, password, remember_me } = this;
             if (credential && password) {
-                // userStorage.login({ credential, password })
+                userStorage.login({credential, password, remember_me})
             }
         }
+    },
+    mounted(){
+        console.log('Login Mounted');
     }
 };
 </script>

@@ -1,6 +1,5 @@
-export * from './server.config';
+export {default as serveConf} from './server.config';
 
 
 
 
-console.log('Server Configuration Loaded');

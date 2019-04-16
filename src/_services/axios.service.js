@@ -1,35 +1,59 @@
-import axiosCred from "axios";
+import axios from "axios";
+// import Vue from 'vue'
+import {serveConf as configuration} from '@/_config'
 
-import { serveConf as configuration } from '@/_config'
-// import { user as userLocalStorage } from '@/_services'
+let localStore = localStorage.getItem(configuration.nameStorageField);
+let token = localStore ? localStorage.token : null;
 
-// const axiosCred = axios.create({
-//     baseURL: serverConf.configuration.serverLocation,
+// const Axios = axios.create({
+//     baseURL: configuration.serverLocation,
 //     timeout: 1000,
-//     headers: {
+//     headers:    {
 //         'Accept' : 'application/json',
-//         'Authorization': 'Bearer '+ userLocalStorage.credential.token,
-//         'X-CSRF-TOKEN': window.Laravel.csrfToken,
-//         'X-Requested-With': 'XMLHttpRequest'
+//         'Authorization': 'Bearer '+ token, //userLocalStorage.credential.token,
+//         // 'X-CSRF-TOKEN': window.Laravel.csrfToken,
+//         // 'X-Requested-With': 'XMLHttpRequest'
 //     }
-    
 // });
 
-axiosCred.defaults.baseURL = configuration.serverLocation();
-axiosCred.defaults.timeout = 1000;
-axiosCred.defaults.headers.common['Accept'] = 'application/json';
-// axiosCred.defaults.headers.common['X-CSRF-TOKEN'] =  window.Laravel.csrfToken;
-// axiosCred.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+const Axios = createInstance(configuration.serverLocation); // will change later
 
-
-
-const token = localStorage.getItem(configuration.nameStorageField())
-if(token){
-    axios.defaults.headers.common['Authorization'] = token.token;
-    console.log('Logged in! `From Axios StartUp`');    
+function createInstance(baseURL){
+    return axios.create({
+        baseURL,
+        // timeout: 10000,
+        headers: {
+            'Accept':'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': null
+        }
+    });
 }
 
 
-console.log('Axios Loaded');
+export default Axios;
+// export default {
+//     install () {
+//         Vue.prototype.$http = Axios
+//         console.log('Axios Loaded!~~');
+//     }
+// }
 
-export default axiosCred;
+// Temp code Idea
+// import { user as userLocalStorage } from '@/_services'
+
+// axiosCred.defaults.baseURL = configuration.serverLocation();
+// axiosCred.defaults.timeout = 1000;
+// axiosCred.defaults.headers.common['Accept'] = 'application/json';
+// // axiosCred.defaults.headers.common['X-CSRF-TOKEN'] =  window.Laravel.csrfToken;
+// // axiosCred.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+
+
+// const token = localStorage.getItem(configuration.nameStorageField())
+// if(token){
+//     axios.defaults.headers.common['Authorization'] = token.token;
+//     console.log('Logged in! `From Axios StartUp`');    
+// }
+
+// const Axios = new AxiosInit();
