@@ -7,9 +7,13 @@ function User(){
     vm.verify = async function(args){
         return new Promise(function(resolve,reject){
             let arg = {
-                erase   :   false,
-                redirect:   false
+                erase   :   null,
+                redirect:   null
             }
+            console.log(arg);
+            console.log(args);
+            
+            
             arg = args;
             let authExist = Axios.defaults.headers.Authorization ? true: false;
             if(authExist){
@@ -31,6 +35,7 @@ function User(){
                     vm.credential = null;
                     Axios.defaults.headers.Authorization = null
                 }
+                resolve(false);
             }
         });
     }

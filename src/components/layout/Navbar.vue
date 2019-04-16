@@ -8,11 +8,13 @@
         <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
             <b-nav-item :to="{ name:'about' } " active-class="active disabled">About</b-nav-item>
-            <b-nav-item :to="{ name:'login' } " active-class="active disabled">Sign In</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
+            
+            <b-nav-item :to="{ name: 'login' }" v-if="isLogged === false" active-class="active disabled">Login</b-nav-item>
+            <!-- <b-nav-item to="login" v-if="isLogged === false">Login</b-nav-item> -->
             <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template slot="button-content"><em>{{ UserData.name }}</em></template>
@@ -29,38 +31,14 @@
 import userCredential from '@/_services/user.service'
 export default {
     name:'Navbar',
-    beforeCreate( to , from , next ){
-        this.name = 'joko subianto'
-        next(( vm ) => {
-            vm.UserData.name = 'joko subianto'
-        });
-        // userCredential.verify()
-        // .then(res=>{
-        //     if(res){
-        //         if(!userCredential.credential.name){
-        //             userCredential.getInfo()
-        //             .then(success=>{
-        //                 if(success){
-        //                     next(( vm ) => {
-        //                         vm.UserData.name = userCredential.credential.name;
-        //                     });
-        //                 }
-        //             });
-        //         }
-        //         else{
-        //             next(( vm ) => {
-        //                 vm.UserData.name = 'joko subianto'
-        //             });
-        //         }
-
-        //     }
-        //     next(( vm ) => {
-        //         vm.UserData.name = 'joko subianto'
-        //     })
-        // });
+    beforeCreate(){
+        if(!userCredential.verify()){
+            this.$router.push({ name:'home' });
+        }
     },
     data(){
         return {
+            isLogged:false,
             UserData:{
                 name:'Hello'
             }
