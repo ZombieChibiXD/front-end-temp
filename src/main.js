@@ -4,6 +4,9 @@ import './plugins/fontawesome'
 import './plugins/bootstrap-vue'
 import App from './App.vue'
 
+import store from 'vuex'
+Vue.prototype.$bus = store
+
 import Axios from "@/_services/axios.service"
 Vue.prototype.$http = Axios
 // Vue.use(Axios)
@@ -15,6 +18,7 @@ import { router } from './_helpers'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faFacebookF, faGooglePlusG, faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faStoreAlt } from '@fortawesome/free-solid-svg-icons';
 
 // import UserCred from "@/_services/user.service";
 // Vue.prototype.$cred = UserCred;

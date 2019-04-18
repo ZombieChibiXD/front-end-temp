@@ -10,11 +10,9 @@ function User(){
                 erase   :   null,
                 redirect:   null
             }
+            arg = Object.assign(arg,args);
             console.log(arg);
-            console.log(args);
             
-            
-            arg = args;
             let authExist = Axios.defaults.headers.Authorization ? true: false;
             if(authExist){
                 Axios.get(Configuration.authUser)
@@ -69,7 +67,7 @@ function User(){
             vm.credential.token = `${token.token_type} ${token.access_token}`;
             Axios.defaults.headers.Authorization = vm.credential.token;
         }
-        vm.verify({'redirect':true,'erase':'something you dont expect'})
+        vm.verify()
         .then(res=>{
             if(res){
                 vm.getInfo();

@@ -29,21 +29,36 @@
 
 <script>
 import userCredential from '@/_services/user.service'
+import bus from 'vuex'
 export default {
     name:'Navbar',
-    beforeCreate(){
-        if(!userCredential.verify()){
-            this.$router.push({ name:'home' });
-        }
-    },
     data(){
         return {
-            isLogged:false,
+            isLogged:this.checkIfIsLogged(),
             UserData:{
                 name:'Hello'
             }
         }
+    }, 
+    created () {
+        this.bus.on('logged', () => {
+            this.isLogged = this.checkIfIsLogged()
+        })
     },
+    methods: {
+        signout () {
+            userCredential.logout();
+            this.isLogged = this.checkIfIsLogged()
+            this.$router.push('/')
+        },
+        checkIfIsLogged () {
+            userCredential.verify()
+            .then(res =>{
+                this.isLogged = res ? true : false;
+            });
+        }
+
+    }
 }
 </script>
 <style scoped>
