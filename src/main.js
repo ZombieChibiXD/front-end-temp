@@ -4,8 +4,14 @@ import './plugins/fontawesome'
 import './plugins/bootstrap-vue'
 import App from './App.vue'
 
-import store from 'vuex'
-Vue.prototype.$bus = store
+import VueSwal from 'vue-swal'
+
+Vue.use(VueSwal)
+import EventBus from './_helpers/EventBus'
+// EventBus Object
+Vue.prototype.$bus = EventBus
+// import vuex from 'vuex'
+// Vue.use(vuex)
 
 import Axios from "@/_services/axios.service"
 Vue.prototype.$http = Axios
@@ -20,16 +26,16 @@ import { faFacebookF, faGooglePlusG, faTwitter } from '@fortawesome/free-brands-
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faStoreAlt } from '@fortawesome/free-solid-svg-icons';
 
+library.add(faFacebookF)
+library.add(faTwitter)
+library.add(faGooglePlusG)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
 // import UserCred from "@/_services/user.service";
 // Vue.prototype.$cred = UserCred;
 
 
 
-
-library.add(faFacebookF)
-library.add(faTwitter)
-library.add(faGooglePlusG)
-Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
 

@@ -72,6 +72,7 @@
                     <input type="submit" :class="{ 'disabled': submitted }" value="Login" class="btn btn-primary">
                 </form>
                 <small>Don't have an account? <a href="#"><strong>Sign Up!</strong></a></small>
+                 <b-button @click='check'>Launch demo modal</b-button>
             </div>
         </div>
     </div>
@@ -104,11 +105,31 @@ export default {
             const { credential, password, remember_me } = this;
             if (credential && password) {
                 userStorage.login({credential, password, remember_me})
+                .then(res=>{
+                    console.log(this.$http.defaults.headers.Authorization);
+                    this.$bus.$emit('logged', 'User logged')
+                    this.$router.push('/')
+                })
             }
+        },
+        check(){
+            console.log('Button Clikced');
+            this.$swal("Write something here:", {
+                content: "input",
+            }).then((value) => {
+                swal(`You typed: ${value}`);
+            });
         }
     },
     mounted(){
-        console.log('Login Mounted');
+        // console.log('Login Mounted');
+    // var mainLoopId = setInterval(function(){
+    //     console.log('Checking Auth');
+        
+    //     console.log(this.$http.defaults.headers.Authorization);
+    // }, 100);
+    
+        
     }
 };
 </script>

@@ -11,7 +11,6 @@ function User(){
                 redirect:   null
             }
             arg = Object.assign(arg,args);
-            console.log(arg);
             
             let authExist = Axios.defaults.headers.Authorization ? true: false;
             if(authExist){
@@ -39,23 +38,30 @@ function User(){
     }
 
     vm.login = function(formdata){
-        //disini proses ambil credential user
-        let credential = null;
-        Axios.post(Configuration.authLogIn, formdata)
-        .then(response => {
-            console.log('Server Response Success');
-            credential = response.data;
-            //kemudian disimpan ke storage        
-            setToStorage(credential);
-            vm.getInfo();
-        }).catch(response => {
-            console.log('Server Response Error');            
-            console.log(response);           
+        return new Promise(function (resolve,reject) {
+            //disini proses ambil credential user
+            let credential = null;
+            Axios.post(Configuration.authLogIn, formdata)
+            .then(response => {
+                console.log('Server Response Success');
+                credential = response.data;
+                //kemudian disimpan ke storage        
+                setToStorage(credential);
+                vm.init();
+                console.log(Axios.defaults.headers.Authorization );
+                resolve(response.data)
+                
+            }).catch(response => {
+                console.log('Server Response Error');            
+                console.log(response);   
+                reject(response)        
+            });
         });
     }
     
     vm.logout = function(){
-        vm.credential = null;
+        
+        vm.credential = vm.credentialEmpty;
         Axios.defaults.headers.Authorization = null;
         localStorage.removeItem(vm.nameStorageField);
     }
@@ -63,10 +69,14 @@ function User(){
     vm.init = function(){
         vm.nameStorageField = Configuration.nameStorageField;
         let token = getFromStorage();
+        console.log(token);
+        
         if(token){
             vm.credential.token = `${token.token_type} ${token.access_token}`;
             Axios.defaults.headers.Authorization = vm.credential.token;
         }
+        console.log('Init');
+        
         vm.verify()
         .then(res=>{
             if(res){
@@ -103,6 +113,17 @@ function User(){
     }
 
     vm.credential = {
+        id          : null,
+        name        : null,
+        username    : null,
+        level       : null,
+        email       : null,
+        user_image  : null,
+        
+        token : null
+    };
+
+    vm.credentialEmpty = {
         id          : null,
         name        : null,
         username    : null,

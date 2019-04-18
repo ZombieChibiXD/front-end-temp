@@ -2,11 +2,11 @@
   <div id="app">   
     <div class="main-container">
       <!-- Navbar -->
-      <div id="nav">
+      <div id="Nav">
         <Navbar/>
       </div>
       <!-- ./Navbar -->
-      <div class="messages">
+      <div class="Messages">
         <Messages lists="msgs" />
       </div>
 
@@ -21,8 +21,10 @@
       <!-- Footer -->
       <Footers />
       <!-- ./Footer -->
-    </div> 
+    </div>
+
   </div>
+  
 </template>
 
 <style>
@@ -68,7 +70,9 @@ footer {
 /* End Costum CSS */
 
 </style>
+
 <script>
+
 import Navbar from '@/components/layout/Navbar.vue'
 import Footers from '@/components/layout/Footers.vue'
 import Messages from '@/components/layout/Messages.vue'

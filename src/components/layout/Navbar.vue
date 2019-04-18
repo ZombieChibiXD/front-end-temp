@@ -11,15 +11,16 @@
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-            
+        <b-navbar-nav class="ml-auto">          
+
+            <!-- Modal Component -->
             <b-nav-item :to="{ name: 'login' }" v-if="isLogged === false" active-class="active disabled">Login</b-nav-item>
             <!-- <b-nav-item to="login" v-if="isLogged === false">Login</b-nav-item> -->
             <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template slot="button-content"><em>{{ UserData.name }}</em></template>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item :to="{ name:'logout' } " active-class="active disabled">Sign Out</b-dropdown-item>
+            <b-dropdown-item :to="{ name:'logout' } " @click.prevent="signout" active-class="active disabled">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
         </b-navbar-nav>
         </b-collapse>
@@ -29,7 +30,6 @@
 
 <script>
 import userCredential from '@/_services/user.service'
-import bus from 'vuex'
 export default {
     name:'Navbar',
     data(){
@@ -41,7 +41,7 @@ export default {
         }
     }, 
     created () {
-        this.bus.on('logged', () => {
+        this.$bus.$on('logged', () => {
             this.isLogged = this.checkIfIsLogged()
         })
     },
@@ -52,6 +52,8 @@ export default {
             this.$router.push('/')
         },
         checkIfIsLogged () {
+            console.log('Checking user');
+            
             userCredential.verify()
             .then(res =>{
                 this.isLogged = res ? true : false;
