@@ -111,24 +111,7 @@ export default {
                     closeModal: false,
                 },
                 })
-                .then(name => {
-                if (!name) throw null;
-                
-                return fetch(`https://itunes.apple.com/search?term=${name}&entity=movie`);
-                })
-                .then(results => {
-                return results.json();
-                })
                 .then(json => {
-                const movie = json.results[0];
-                
-                if (!movie) {
-                    return swal("No movie was found!");
-                }
-                
-                const name = movie.trackName;
-                const imageURL = movie.artworkUrl100;
-                
                 swal({
                     title: "Top result:",
                     text: name,
