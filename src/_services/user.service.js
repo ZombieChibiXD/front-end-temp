@@ -48,7 +48,7 @@ function User(){
                 //kemudian disimpan ke storage        
                 setToStorage(credential);
                 vm.init();
-                console.log(Axios.defaults.headers.Authorization );
+                // console.log(Axios.defaults.headers.Authorization );
                 resolve(response.data)
                 
             }).catch(response => {
@@ -67,21 +67,29 @@ function User(){
     }
 
     vm.init = function(){
-        vm.nameStorageField = Configuration.nameStorageField;
-        let token = getFromStorage();
-        console.log(token);
-        
-        if(token){
-            vm.credential.token = `${token.token_type} ${token.access_token}`;
-            Axios.defaults.headers.Authorization = vm.credential.token;
-        }
-        console.log('Init');
-        
-        vm.verify()
-        .then(res=>{
-            if(res){
-                vm.getInfo();
+        return new Promise(function(resolve,reject){
+            try{
+                vm.nameStorageField = Configuration.nameStorageField;
+                let token = getFromStorage();
+                // console.log(token);
+                
+                if(token){
+                    vm.credential.token = `${token.token_type} ${token.access_token}`;
+                    Axios.defaults.headers.Authorization = vm.credential.token;
+                }
+                vm.verify()
+                .then(res=>{
+                    if(res){
+                        vm.getInfo().then(res=>{
+                            resolve(res);
+                        });
+                    }
+                });
             }
+            catch(err){
+                reject(err);
+            }
+
         });
     }
 

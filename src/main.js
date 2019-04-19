@@ -4,7 +4,7 @@ import './plugins/fontawesome'
 import './plugins/bootstrap-vue'
 import App from './App.vue'
 
-import Swal from 'sweetalert2'
+import Swal from 'vue-sweetalert2'
 Vue.use(Swal)
 
 import Toasted from 'vue-toasted';

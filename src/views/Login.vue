@@ -104,38 +104,69 @@ export default {
             this.submitted = true;
             const { credential, password, remember_me } = this;
             if (credential && password) {
-                swal({
-                text: 'Logging in',
-                button: {
-                    text: "Search!",
-                    closeModal: false,
-                },
-                })
-                .then(json => {
-                swal({
-                    title: "Top result:",
-                    text: name,
-                    icon: imageURL,
-                });
-                })
-                .catch(err => {
-                if (err) {
-                    swal("Oh noes!", "The AJAX request failed!", "error");
-                } else {
-                    swal.stopLoading();
-                    swal.close();
-                }
+                // this.$swal({
+                // text: 'Logging in',
+                // button: {
+                //     text: "Search!",
+                //     closeModal: false,
+                // },
+                // })
+                // .then(json => {
+                // this.$swal({
+                //     title: "Top result:",
+                //     text: name,
+                //     icon: imageURL,
+                // });
+                // })
+                // .catch(err => {
+                // if (err) {
+                //     this.$swal("Oh noes!", "The AJAX request failed!", "error");
+                // } else {
+                //     this.$swal.stopLoading();
+                //     this.$swal.close();
+                // }
+                // });
+                this.$swal({
+                    title: 'Logging in...',
+                    onOpen: () => {
+                        this.$swal.showLoading()
+                    },
+                    text:'Please wait~',
+                    showConfirmButton: false,
+                    allowOutsideClick: false
                 });
                 userStorage.login({credential, password, remember_me})
                 .then(res=>{
-                    console.log(this.$http.defaults.headers.Authorization);
                     this.$bus.$emit('logged', 'User logged')
+                    // this.$bus.$emit('fromlogin', 'User logged')
+                    //Make something to wait untill user is confirmed logged in
+                    this.$swal.close();
+                    this.$toasted.show("You have logged in", { 
+                        action : {
+                            text : 'Got it!',
+                            onClick : (e, toastObject) => { toastObject.goAway(0);  }
+                        },
+                        theme: "outline", 
+                        position: "top-right", 
+                        duration : 5000
+                    });
                     this.$router.push('/')
+                })
+                .catch(res=>{
+                    console.log(res);
+                    
+                    this.$swal.hideLoading();
+                    this.$swal('Oops','Login Failed','error');
                 })
             }
         },
         check(){
             console.log('Button Clikced');
+            this.$swal({
+                title: 'Logging in...',
+                text:'Please wait~'
+            });
+            this.$swal.showLoading();
             
             // this.$swal("Write something here:", {
             //     content: "input",
