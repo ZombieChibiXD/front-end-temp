@@ -50,6 +50,16 @@ export default {
             userCredential.logout();
             this.isLogged = this.checkIfIsLogged()
             this.$router.push('/')
+            this.$toasted.show("You have logged out", { 
+                action : {
+                    text : 'Got it!',
+                    onClick : (e, toastObject) => { toastObject.goAway(0);  }
+                },
+
+                theme: "outline", 
+                position: "top-right", 
+                duration : 5000
+            });
         },
         checkIfIsLogged () {
             console.log('Checking user');

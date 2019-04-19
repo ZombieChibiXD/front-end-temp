@@ -63,12 +63,12 @@
                         :class="{ 'is-invalid': submitted && !password }" placeholder="Password" aria-describedby="password">
                         <small v-show="submitted && !password" class="invalid-feedback">Password is required</small>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <input type="checkbox" v-model="remember_me" name="remember_me"
                          aria-describedby="remember_me">
                         
                         <label for="remember_me">Remember me</label>
-                    </div>
+                    </div> -->
                     <input type="submit" :class="{ 'disabled': submitted }" value="Login" class="btn btn-primary">
                 </form>
                 <small>Don't have an account? <a href="#"><strong>Sign Up!</strong></a></small>
@@ -104,6 +104,45 @@ export default {
             this.submitted = true;
             const { credential, password, remember_me } = this;
             if (credential && password) {
+                swal({
+                text: 'Logging in',
+                button: {
+                    text: "Search!",
+                    closeModal: false,
+                },
+                })
+                .then(name => {
+                if (!name) throw null;
+                
+                return fetch(`https://itunes.apple.com/search?term=${name}&entity=movie`);
+                })
+                .then(results => {
+                return results.json();
+                })
+                .then(json => {
+                const movie = json.results[0];
+                
+                if (!movie) {
+                    return swal("No movie was found!");
+                }
+                
+                const name = movie.trackName;
+                const imageURL = movie.artworkUrl100;
+                
+                swal({
+                    title: "Top result:",
+                    text: name,
+                    icon: imageURL,
+                });
+                })
+                .catch(err => {
+                if (err) {
+                    swal("Oh noes!", "The AJAX request failed!", "error");
+                } else {
+                    swal.stopLoading();
+                    swal.close();
+                }
+                });
                 userStorage.login({credential, password, remember_me})
                 .then(res=>{
                     console.log(this.$http.defaults.headers.Authorization);
@@ -114,11 +153,12 @@ export default {
         },
         check(){
             console.log('Button Clikced');
-            this.$swal("Write something here:", {
-                content: "input",
-            }).then((value) => {
-                swal(`You typed: ${value}`);
-            });
+            
+            // this.$swal("Write something here:", {
+            //     content: "input",
+            // }).then((value) => {
+            //     swal(`You typed: ${value}`);
+            // });
         }
     },
     mounted(){

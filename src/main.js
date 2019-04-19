@@ -4,9 +4,20 @@ import './plugins/fontawesome'
 import './plugins/bootstrap-vue'
 import App from './App.vue'
 
-import VueSwal from 'vue-swal'
+import Swal from 'sweetalert2'
+Vue.use(Swal)
 
-Vue.use(VueSwal)
+import Toasted from 'vue-toasted';
+
+// Vue.use(Toasted)
+
+// you can also pass options, check options reference below
+Vue.use(Toasted, {
+  router
+})
+
+
+
 import EventBus from './_helpers/EventBus'
 // EventBus Object
 Vue.prototype.$bus = EventBus
