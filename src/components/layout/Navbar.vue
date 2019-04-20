@@ -38,10 +38,8 @@ export default {
     data(){
         return {
             isLogged:this.checkIfIsLogged(),
-            fromLogin:false,
-            firstStart:true,
             UserData:{
-                name:'Hi'
+                name:''
             }
         }
     }, 
@@ -71,6 +69,7 @@ export default {
             confirmButtonText: 'Log out!'
             }).then((result) => {
             if (result.value) {
+                this.UserData.name = 'Logging out';
                 userCredential.logout();
                 this.isLogged = false;
                 this.$router.push('/')
@@ -84,18 +83,26 @@ export default {
                     position: "top-right", 
                     duration : 5000
                 });
+                this.UserData.name = '';
             }
             })
         },
         checkIfIsLogged () {
-            console.log('Checking user');
-            
             userCredential.verify()
             .then(res =>{
+                console.log('Verify Response : ' + res);
+                
                 if(res){
-                    this.UserData.name = userCredential.credential.name;
-                    if(this.fromLogin || this.firstStart){
-                        
+                    if(!userCredential.credential.name){
+                        this.UserData.name = 'Getting User...';
+                        userCredential.getInfo()
+                        .then(res =>{
+                            console.log(userCredential.credential.name);
+                            this.UserData.name = userCredential.credential.name;
+                        });
+                    }
+                    else{
+                        this.UserData.name = userCredential.credential.name;
                     }
                 }
                 this.isLogged = res ? true : false;

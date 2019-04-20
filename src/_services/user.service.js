@@ -3,7 +3,7 @@ import Axios from '@/_services/axios.service'
 function User(){    
     let vm = this;
     vm.nameStorageField = null;
-
+    vm.initialized = false;
     vm.verify = async function(args){
         return new Promise(function(resolve,reject){
             let arg = {
@@ -112,7 +112,7 @@ function User(){
                 else{
                     console.error('Retriving User Credential Failed. Did you log in?');
                 }
-                resolve(true)
+                resolve(credential)
             }).catch(response =>{
                 console.log('Error Retriving User Data');
                 console.log(response);
