@@ -98,7 +98,7 @@ export default {
                         userCredential.getInfo()
                         .then(res =>{
                             console.log(userCredential.credential.name);
-                            this.UserData.name = userCredential.credential.name;
+                            this.UserData.name =  userCredential.credential.name.replace(/ .*/,'');
                         });
                     }
                     else{
