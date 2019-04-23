@@ -7,7 +7,14 @@
 
 <style scoped>
 footer {
-    background-color: aqua;
-    height: 2rem;
+    background: tomato;
+    color: #fff;
+    padding-top: 375px;
+    vertical-align: middle;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 0;
 }
 </style>

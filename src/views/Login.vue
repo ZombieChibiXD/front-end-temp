@@ -58,7 +58,7 @@
                         <small v-show="submitted && !credential" class="invalid-feedback">Username is required</small>
                     </div>
                     <div class="form-group">
-                        <label for="credential">Password :</label>
+                        <label for="password">Password :</label>
                         <input type="password" v-model="password" name="password" class="form-control"
                         :class="{ 'is-invalid': submitted && !password }" placeholder="Password" aria-describedby="password">
                         <small v-show="submitted && !password" class="invalid-feedback">Password is required</small>

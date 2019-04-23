@@ -19,9 +19,9 @@
       <!-- ./Content -->
 
       <!-- Footer -->
-      <Footers />
       <!-- ./Footer -->
     </div>
+    <Footers />
 
   </div>
   
@@ -49,14 +49,20 @@ html,
 body {
  height: 100%;
  position: relative;
- background-color: #f5f5f5;
 }
 .main-container {
- min-height: 100vh; /* will cover the 100% of viewport */
- overflow: hidden;
- display: block;
- position: relative;
- padding-bottom: 5vh; /* height of your footer */
+  background-color: #f5f5f5;
+  min-height: 100vh; /* will cover the 100% of viewport */
+  /* display: block;
+  position: relative;
+  margin-bottom: 220px;
+  position: relative;
+  z-index: 2; */
+  /* padding-bottom: 5vh; height of your footer */ 
+  width: 100%;
+  margin-bottom: 40vh;
+  position: relative;
+  z-index: 2;
 }
 footer {
  position: absolute;
@@ -64,7 +70,7 @@ footer {
  width: 100%;
 }
 .container{
-  min-height: 89vh;
+  min-height: 91vh;
   background-color: rgb(255, 255, 255);
 }
 /* End Costum CSS */

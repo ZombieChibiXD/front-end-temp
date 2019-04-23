@@ -14,7 +14,7 @@
         <b-navbar-nav class="ml-auto" v-if="isLogged === false">
             <b-nav-item :to="{ name: 'login' }" active-class="active disabled">Login</b-nav-item>
             <b-nav-item class="disabled">/</b-nav-item>
-            <b-nav-item :to="{ name: 'login' }" active-class="active disabled">Register</b-nav-item>
+            <b-nav-item :to="{ name: 'register' }" active-class="active disabled">Register</b-nav-item>
             <!-- <b-nav-item to="login" v-if="isLogged === false">Login</b-nav-item> -->
         </b-navbar-nav >
         <b-navbar-nav v-if="isLogged === true" class="ml-auto">     
