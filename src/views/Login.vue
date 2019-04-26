@@ -126,37 +126,17 @@ export default {
                 //     this.$swal.close();
                 // }
                 // });
-                this.$swal({
-                    title: 'Logging in...',
-                    onOpen: () => {
-                        this.$swal.showLoading()
-                    },
-                    text:'Please wait~',
-                    showConfirmButton: false,
-                    allowOutsideClick: false
-                });
+                this.$bus.$emit('logging_state', { 'state' : 'logging' });
                 userStorage.login({credential, password, remember_me})
                 .then(res=>{
+                    console.log(res);
                     this.$bus.$emit('logged', 'User logged')
                     // this.$bus.$emit('fromlogin', 'User logged')
-                    //Make something to wait untill user is confirmed logged in
-                    this.$swal.close();
-                    this.$toasted.show("You have logged in", { 
-                        action : {
-                            text : 'Got it!',
-                            onClick : (e, toastObject) => { toastObject.goAway(0);  }
-                        },
-                        theme: "outline", 
-                        position: "top-right", 
-                        duration : 5000
-                    });
-                    this.$router.push('/')
                 })
                 .catch(res=>{
                     console.log(res);
+                    this.$bus.$emit('logging_state', { 'state' : 'failed'});
                     
-                    this.$swal.hideLoading();
-                    this.$swal('Oops','Login Failed','error');
                 })
             }
         },

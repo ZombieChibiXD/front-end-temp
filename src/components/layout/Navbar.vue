@@ -38,6 +38,7 @@ export default {
     data(){
         return {
             isLogged:this.checkIfIsLogged(),
+            fromLogin:false,
             UserData:{
                 name:''
             }
@@ -45,9 +46,6 @@ export default {
     }, 
     created () {
         this.$bus.$on('logged', () => {
-            if(!this.isLogged){
-                this.fromLogin = true;
-            }
             this.isLogged = true;
             if(this.isLogged){
                 this.checkIfIsLogged()
@@ -56,6 +54,52 @@ export default {
         // this.$bus.$on('fromlogin', () => {
         //     
         // })
+    },
+    mounted(){
+        this.$bus.$on('logging_state', emitted =>{
+            console.log(emitted);
+            
+            switch (emitted.state) {
+                case 'logging':
+                    this.$swal({
+                        title: 'Logging in...',
+                        onOpen: () => {
+                            this.$swal.showLoading()
+                        },
+                        text:'Please wait~',
+                        showConfirmButton: false,
+                        allowOutsideClick: false
+                    });
+                    this.fromLogin = true;
+                    break;
+                case 'logged':
+                    this.$swal.close();
+                    this.$toasted.show("You have logged in", { 
+                        action : {
+                            text : 'Got it!',
+                            onClick : (e, toastObject) => { toastObject.goAway(0);  }
+                        },
+                        theme: "outline", 
+                        position: "top-right", 
+                        duration : 5000
+                    });
+                    this.$router.push('/')
+                    break;
+                case 'failed':
+                    this.$swal.close();
+                    this.$swal('Oops','Login Failed','error');
+                    break;
+                case 'error':
+                    this.$swal.close();
+                    this.$swal('Unexpected error occured!','Check your connection, and please reload the page','error');
+                    break;
+                default:
+                    console.log('Critical error in navbar swithcase : '+emitted);
+                    console.log(emitted);
+                    
+                    break;
+            }
+        })
     },
     methods: {
         signout () {
@@ -68,30 +112,35 @@ export default {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Log out!'
             }).then((result) => {
-            if (result.value) {
-                this.UserData.name = 'Logging out';
-                userCredential.logout();
-                this.isLogged = false;
-                this.$router.push('/')
-                this.$toasted.show("You have logged out", { 
-                    action : {
-                        text : 'Got it!',
-                        onClick : (e, toastObject) => { toastObject.goAway(0);  }
-                    },
-    
-                    theme: "outline", 
-                    position: "top-right", 
-                    duration : 5000
-                });
-                this.UserData.name = '';
-            }
+                if (result.value) {
+                    this.UserData.name = 'Logging out';
+                    userCredential.logout()
+                    .then(res=>{
+                        this.isLogged = false;
+                        this.$router.push('/')
+                        this.$toasted.show("You have logged out", { 
+                            action : {
+                                text : 'Got it!',
+                                onClick : (e, toastObject) => { toastObject.goAway(0);  }
+                            },
+            
+                            theme: "outline", 
+                            position: "top-right", 
+                            duration : 5000
+                        });
+                        this.UserData.name = '';
+                        this.isLogged = false;
+                    })
+                    .catch(res=>{
+                        console.err(res)
+                    });
+                }
             })
         },
         checkIfIsLogged () {
             userCredential.verify()
             .then(res =>{
                 console.log('Verify Response : ' + res);
-                
                 if(res){
                     if(!userCredential.credential.name){
                         this.UserData.name = 'Getting User...';
@@ -102,10 +151,18 @@ export default {
                         });
                     }
                     else{
-                        this.UserData.name = userCredential.credential.name;
+                        this.UserData.name = userCredential.credential.name.replace(/ .*/,'');
                     }
                 }
+                if(this.fromLogin){
+                    this.fromLogin = false;
+                    this.$bus.$emit('logging_state',{ 'state' : 'logged'});
+                }
                 this.isLogged = res ? true : false;
+            })
+            .catch(res=>{
+                console.error(res);
+                this.$bus.$emit('logging_state',{ 'state' : 'error' })
             });
         }
 

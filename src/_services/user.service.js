@@ -4,6 +4,8 @@ function User(){
     let vm = this;
     vm.nameStorageField = null;
     vm.initialized = false;
+
+
     vm.verify = async function(args){
         return new Promise(function(resolve,reject){
             let arg = {
@@ -11,7 +13,6 @@ function User(){
                 redirect:   null
             }
             arg = Object.assign(arg,args);
-            
             let authExist = Axios.defaults.headers.Authorization ? true: false;
             if(authExist){
                 Axios.get(Configuration.authUser)
@@ -21,7 +22,7 @@ function User(){
                     else
                         resolve(false);
                 }).catch(res=>{
-                    console.log(res);
+                    reject(res)
                 });
             }
             else{
@@ -60,10 +61,27 @@ function User(){
     }
     
     vm.logout = function(){
+        return new Promise(function(resolve,reject){
+            Axios.get(Configuration.authLogOut)
+            .then(response =>{
+                vm.credential = vm.credentialEmpty;
+                Axios.defaults.headers.Authorization = null;
+                localStorage.removeItem(vm.nameStorageField);
+
+                if(response.status =='200'){
+                    resolve(1)
+                }
+                else{
+                    resolve(0)
+                    console.error('You already logged out');
+                }
+            }).catch(response =>{
+                console.log('Error Logging out');
+                console.log(response);
+                reject(response)
+            });
+        });
         
-        vm.credential = vm.credentialEmpty;
-        Axios.defaults.headers.Authorization = null;
-        localStorage.removeItem(vm.nameStorageField);
     }
 
     vm.init = function(){
