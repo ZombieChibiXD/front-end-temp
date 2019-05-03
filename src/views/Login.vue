@@ -84,6 +84,7 @@
 import userStorage from '@/_services/user.service'
 
 export default {
+    name:'Login',
     data () {
         return {
             credential: '',

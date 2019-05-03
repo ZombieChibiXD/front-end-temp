@@ -1,20 +1,20 @@
 <template>
     <div>
     <b-navbar toggleable="lg" class="navbars">
-        <b-navbar-brand :to="{name:'home'}">Chibi's Website</b-navbar-brand>
+        <b-navbar-brand :to="{name:'Home'}">Chibi's Website</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-            <b-nav-item :to="{ name:'about' } " active-class="active disabled">About</b-nav-item>
+            <b-nav-item :to="{ name:'About' } " active-class="active disabled">About</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto" v-if="isLogged === false">
-            <b-nav-item :to="{ name: 'login' }" active-class="active disabled">Login</b-nav-item>
+            <b-nav-item :to="{ name: 'Login' }" active-class="active disabled">Login</b-nav-item>
             <b-nav-item class="disabled">/</b-nav-item>
-            <b-nav-item :to="{ name: 'register' }" active-class="active disabled">Register</b-nav-item>
+            <b-nav-item :to="{ name: 'Register' }" active-class="active disabled">Register</b-nav-item>
             <!-- <b-nav-item to="login" v-if="isLogged === false">Login</b-nav-item> -->
         </b-navbar-nav >
         <b-navbar-nav v-if="isLogged === true" class="ml-auto">     
@@ -23,7 +23,7 @@
             <!-- Using 'button-content' slot -->
                 <template slot="button-content"><em>{{ UserData.name }}</em></template>
                 <b-dropdown-item href="#"  >Profile</b-dropdown-item>
-                <b-dropdown-item to="#" @click.prevent="signout" active-class="active disabled">Sign Out</b-dropdown-item>
+                <b-dropdown-item @click.prevent="signout">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
         </b-navbar-nav>
         </b-collapse>
@@ -117,7 +117,7 @@ export default {
                     userCredential.logout()
                     .then(res=>{
                         this.isLogged = false;
-                        this.$router.push('/')
+                        this.$router.push({ name: 'Login'})
                         this.$toasted.show("You have logged out", { 
                             action : {
                                 text : 'Got it!',

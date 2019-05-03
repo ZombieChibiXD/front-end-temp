@@ -15,27 +15,27 @@ export const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: Home
     },
     {
       path: '/login',
-      name: 'login',
+      name: 'Login',
       component: Login
     },
     {
       path: '/register',
-      name: 'register',
+      name: 'Register',
       component: Register
     },
     {
       path: '/logout',
-      name: 'logout',
+      name: 'Logout',
       component: Logout
     },
     {
       path: '/about',
-      name: 'about',
+      name: 'About',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
