@@ -9,7 +9,7 @@
 footer {
     background: tomato;
     color: #fff;
-    padding-top: 375px;
+    padding-top: 35vh;
     vertical-align: middle;
     position: fixed;
     bottom: 0;

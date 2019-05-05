@@ -7,6 +7,7 @@ import Home from '@/views/Home.vue'
 import Login from '@/views/Login.vue'
 import Logout from '@/views/Logout.vue'
 import Register from '@/views/Register.vue'
+import Tag from '@/components/Tag.vue'
 
 Vue.use(Router)
 
@@ -41,6 +42,23 @@ export const router = new Router({
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
     },
+    {
+      path: '/tag/:tagname',
+      name: 'Tag',
+      component: Tag,
+      props: true ,
+    },
+    {
+      path: '/article/create',
+      name: 'CreateArtikel',
+      component: () => import(/* webpackChunkName: "about" */ '@/components/Insert.vue'),
+    },
+    {
+      path: '/article/:article_id',
+      name: 'Content',
+      props: true ,
+      component: () => import(/* webpackChunkName: "about" */ '@/components/Content.vue'),
+    },
     { path: '*', redirect: '/' },
     
   ],
@@ -61,6 +79,3 @@ export const router = new Router({
 
 //   next();
 // })
-
-
-console.log('Router Initialized');

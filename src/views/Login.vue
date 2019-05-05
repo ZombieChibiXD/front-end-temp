@@ -34,10 +34,11 @@
             </div>            
         </div>
     </div> -->    
-    <div class="container">
-        <div>&nbsp;</div>
-        <div class="row mx-auto mt-lg-3 mt-md-4 mt-sm-5" style="width:65vw;">
+    <div class="container-fluid">
+        <div class="mb-lg-5">&nbsp;</div>
+        <div class="row mx-auto mt-lg-3 mt-md-4 mt-sm-5 py-auto">
             <div class="col-12 col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-lg-5">
+                <div class="mb-4">&nbsp;</div>
                 <b-button block variant="primary">
                     <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'facebook-f' }"/>
                     Sign in with Facebook
@@ -50,6 +51,7 @@
             </div>
             <div class="mt-lg-auto mt-md-5 mt-sm-5"></div>
             <div class="col-12 col-xl-6 col-lg-6 col-md-12 col-sm-12 text-left mt-lg-3">
+                <div class="mb-4">&nbsp;</div>
                 <form @submit.prevent="handleSubmit" class="mb-2">
                     <div class="form-group">
                         <label for="credential">Username / Email :</label>
@@ -72,9 +74,9 @@
                     <input type="submit" :class="{ 'disabled': submitted }" value="Login" class="btn btn-primary">
                 </form>
                 <small>Don't have an account? <a href="#"><strong>Sign Up!</strong></a></small>
-                 <b-button @click='check'>Launch demo modal</b-button>
-            </div>
+            </div>            
         </div>
+        <div class=" my-5">&nbsp;</div>
     </div>
 </template>
 

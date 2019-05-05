@@ -6,8 +6,14 @@
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav>
+        <b-navbar-nav class="mx-auto">
+            <b-nav-item :to="{ name: 'Tag',params: { tagname: 'new' } }" active-class='active disabled'>Newest</b-nav-item>
+            <b-nav-item :to="{ name: 'Tag',params: { tagname: 'popular' } }" active-class='active disabled'>Popular</b-nav-item>
+            <b-nav-item :to="{ name: 'Tag',params: { tagname: 'entertaiment' } }" active-class='active disabled'>Entertaiment</b-nav-item>
+            <b-nav-item :to="{ name: 'Tag',params: { tagname: 'sports' } }" active-class='active disabled'>Sports</b-nav-item>
+            <b-nav-item :to="{ name: 'Tag',params: { tagname: 'lifestyle' } }" active-class='active disabled'>Lifestyle</b-nav-item>
             <b-nav-item :to="{ name:'About' } " active-class="active disabled">About</b-nav-item>
+          <b-nav-item :to="{ name: 'CreateArtikel' }" active-class='active disabled'>Insert</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -17,7 +23,8 @@
             <b-nav-item :to="{ name: 'Register' }" active-class="active disabled">Register</b-nav-item>
             <!-- <b-nav-item to="login" v-if="isLogged === false">Login</b-nav-item> -->
         </b-navbar-nav >
-        <b-navbar-nav v-if="isLogged === true" class="ml-auto">     
+        <b-navbar-nav v-if="isLogged === true" class="ml-auto"> 
+            <b-nav-item :to="{ name: 'CreateArtikel' }" active-class='active disabled'>Create article</b-nav-item>    
             <!-- Modal Component -->
             <b-nav-item-dropdown right >
             <!-- Using 'button-content' slot -->

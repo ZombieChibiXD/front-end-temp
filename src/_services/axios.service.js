@@ -26,7 +26,8 @@ function createInstance(baseURL){
             'Accept':'application/json',
             'Content-Type': 'application/json',
             'Authorization': null
-        }
+        },
+        timeout:50000,
     });
 }
 

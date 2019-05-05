@@ -1,5 +1,7 @@
+import Vue from 'vue'
 import { serveConf as Configuration } from "@/_config";
 import Axios from '@/_services/axios.service'
+Vue.prototype.$http = Axios;
 function User(){    
     let vm = this;
     vm.nameStorageField = null;
@@ -13,9 +15,9 @@ function User(){
                 redirect:   null
             }
             arg = Object.assign(arg,args);
-            let authExist = Axios.defaults.headers.Authorization ? true: false;
+            let authExist = Vue.prototype.$http.defaults.headers.Authorization ? true: false;
             if(authExist){
-                Axios.get(Configuration.authUser)
+                Vue.prototype.$http.get(Configuration.authUser)
                 .then(res =>{
                     if(res.data.status == 200)
                         resolve(true);
@@ -31,25 +33,55 @@ function User(){
                 }
                 if(arg.redirect){
                     vm.credential = null;
-                    Axios.defaults.headers.Authorization = null
+                    Vue.prototype.$http.defaults.headers.Authorization = null
                 }
                 resolve(false);
             }
         });
     }
 
+
+    vm.register = function(formdata) {
+        return new Promise(function (resolve,reject) {
+            let formData = new FormData();
+            formData.append('name', formdata.name);
+            formData.append('username', formdata.username);
+            formData.append('email', formdata.email);
+            formData.append('password', formdata.password);
+            formData.append('password_confirmation', formdata.password_confirmation);
+            formData.append('user_image', formdata.user_image);
+            console.log('FormData RegisterVUe');
+            console.log(formdata);
+            Vue.prototype.$http.post(Configuration.authSignUp, formData, { 
+                headers : { 'Content-Type': 'multipart/form-data' } 
+            })
+            .then(response =>{
+                if(response.status == 201){
+                    resolve('success');
+                }
+                else{
+                    reject(response);
+                }
+            })
+            .catch(response =>{
+                reject(response);
+            });
+
+        })
+    }
+
     vm.login = function(formdata){
         return new Promise(function (resolve,reject) {
             //disini proses ambil credential user
             let credential = null;
-            Axios.post(Configuration.authLogIn, formdata)
+            Vue.prototype.$http.post(Configuration.authLogIn, formdata)
             .then(response => {
                 console.log('Server Response Success');
                 credential = response.data;
                 //kemudian disimpan ke storage        
                 setToStorage(credential);
                 vm.init();
-                // console.log(Axios.defaults.headers.Authorization );
+                // console.log(Vue.prototype.$http.defaults.headers.Authorization );
                 resolve(response.data)
                 
             }).catch(response => {
@@ -62,10 +94,10 @@ function User(){
     
     vm.logout = function(){
         return new Promise(function(resolve,reject){
-            Axios.get(Configuration.authLogOut)
+            Vue.prototype.$http.get(Configuration.authLogOut)
             .then(response =>{
                 vm.credential = vm.credentialEmpty;
-                Axios.defaults.headers.Authorization = null;
+                Vue.prototype.$http.defaults.headers.Authorization = null;
                 localStorage.removeItem(vm.nameStorageField);
 
                 if(response.status =='200'){
@@ -93,7 +125,7 @@ function User(){
                 
                 if(token){
                     vm.credential.token = `${token.token_type} ${token.access_token}`;
-                    Axios.defaults.headers.Authorization = vm.credential.token;
+                    Vue.prototype.$http.defaults.headers.Authorization = vm.credential.token;
                 }
                 vm.verify()
                 .then(res=>{
@@ -115,7 +147,7 @@ function User(){
         
         return new Promise(function(resolve,reject){
             //proses ambil data ke server
-            Axios.get(Configuration.authUser)
+            Vue.prototype.$http.get(Configuration.authUser)
             .then(response =>{
                 //lalu di set ke credential
                 let credential = response.data ? response.data : null;
