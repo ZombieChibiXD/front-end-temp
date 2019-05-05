@@ -1,13 +1,12 @@
 <template>
     <div>
     <b-navbar toggleable="lg" class="navbars">
-        <b-navbar-brand :to="{name:'Home'}">Chibi's Website</b-navbar-brand>
+        <b-navbar-brand :to="{name:'Home'}" > <img src="@/assets/logo.png" height="40vh"></b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="mx-auto">
-            <b-nav-item :to="{ name: 'Tag',params: { tagname: 'new' } }" active-class='active disabled'>Newest</b-nav-item>
             <b-nav-item :to="{ name: 'Tag',params: { tagname: 'popular' } }" active-class='active disabled'>Popular</b-nav-item>
             <b-nav-item :to="{ name: 'Tag',params: { tagname: 'entertaiment' } }" active-class='active disabled'>Entertaiment</b-nav-item>
             <b-nav-item :to="{ name: 'Tag',params: { tagname: 'sports' } }" active-class='active disabled'>Sports</b-nav-item>
@@ -178,7 +177,7 @@ export default {
 </script>
 <style scoped>
 .navbars{
-    background-color: rgba(46, 241, 255, 0.61);
+    background-color:lightcyan;
 }
 </style>
 

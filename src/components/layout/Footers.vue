@@ -1,14 +1,14 @@
 <template>
     <footer>
-        &copy;2019 @ZombieChibiXD
+     Adrian Fernando Gozali   &copy;2019 
     </footer>
 </template>
 
 
 <style scoped>
 footer {
-    background: tomato;
-    color: #fff;
+    background-color: lightcyan;
+    color: darkblue;
     padding-top: 35vh;
     vertical-align: middle;
     position: fixed;

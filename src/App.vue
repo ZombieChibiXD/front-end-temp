@@ -51,7 +51,7 @@ body {
  position: relative;
 }
 .main-container {
-  background-color: #f5f5f5;
+  background-color: lightgray;
   min-height: 100vh; /* will cover the 100% of viewport */
   /* display: block;
   position: relative;
@@ -60,7 +60,7 @@ body {
   z-index: 2; */
   /* padding-bottom: 5vh; height of your footer */ 
   width: 100%;
-  margin-bottom: 35vh;
+  margin-bottom: 15vh;
   position: relative;
   z-index: 2;
 }

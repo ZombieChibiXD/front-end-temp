@@ -5,7 +5,7 @@
 
         <div class="row py-5">
             <!-- SideBar -->
-            <div class="col-sm-5 col-xs-12 p-1 sidebar">
+            <div class="col-sm-4 col-xs-12 p-1 sidebar">
                 <div class="article-list border mb-3 p-3" v-for="(item, index) in variable" :key="item.id" :index="index" v-show="index%4 == 0">
                     <div class="w-100 border-bottom">
                         <img :src="item.image" class="w-100">
@@ -25,7 +25,10 @@
             <div class="col-sm-7 col-xs-12 p-0">
                 <div class="article-list border mb-3 p-3" v-for="(item, index) in variable" :key="item.id" :index="index" v-show="!(index%4)==0">
                     <div class="row border-between ">
-                        <div class="col-7">
+                        <div class="col-sm-5 col-xs-12">
+                            <img :src="item.image" class="w-100">
+                        </div>
+                        <div class="col-sm-7 col-xs-12">
                             <div class="w-100 border-bottom">
                                 <h3>
                                     <router-link :to="{ name: 'Content',  params: { article_id:  item.id } }">
@@ -36,9 +39,6 @@
                             <p class="text-left">
                                 {{ item.content }}
                             </p>
-                        </div>
-                        <div class="col-5">
-                            <img :src="item.image" class="w-100">
                         </div>
                     </div>
                 </div>
@@ -139,7 +139,7 @@ export default {
   
 }
 </script>
-<style>
+<style scoped>
 .border-between > [class*='col-']:before {
    background: #e3e3e3;
    bottom: 0;
@@ -154,6 +154,6 @@ export default {
    display: none;
 }
 .article-list:hover{
-    background-color: aquamarine;
+    background-color: lightcoral;
 }
 </style>
