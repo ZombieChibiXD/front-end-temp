@@ -1,6 +1,6 @@
 <template>
     <div>
-    <b-navbar toggleable="lg" class="navbars">
+    <b-navbar toggleable="lg" type="dark" class="navbars">
         <b-navbar-brand :to="{name:'Home'}">Chibi's Website</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -176,9 +176,10 @@ export default {
     }
 }
 </script>
+
 <style scoped>
 .navbars{
-    background-color: rgba(46, 241, 255, 0.61);
+    background-color: darkkhaki;
 }
 </style>
 

@@ -7,11 +7,11 @@
 
 <style scoped>
 footer {
-    background: tomato;
+    background: darkkhaki;
     color: #fff;
-    padding-top: 35vh;
+    padding-top: 25vh;
     vertical-align: middle;
-    position: fixed;
+    position: relative;
     bottom: 0;
     left: 0;
     width: 100%;
