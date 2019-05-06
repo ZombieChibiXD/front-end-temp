@@ -2,11 +2,19 @@
     <div>
         <!-- <h1>Menampilkan Berita : {{ caps(tagname) }}</h1>
         <hr> -->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" @click="fetchArticles(pagination.prev_page_url)">Previous</a></li>
 
+                <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
+            
+                <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item"><a class="page-link" href="#" @click="fetchArticles(pagination.next_page_url)">Next</a></li>
+            </ul>
+        </nav>
         <div class="row py-5">
             <!-- Content -->
             <div class="col-sm-8 col-xs-12 p-0">
-                <div class="article-list border mb-3 p-3" v-for="(item, index) in variable" :key="item.id" :index="index" v-show="!(index%4)==0">
+                <div class="article-list border mb-3 p-3" v-for="(item, index) in articles" :key="item.id" :index="index" v-show="!(index%4)==0">
                     <div class="row border-between ">
                         <div class="col-sm-5 col-xs-12 ">
                             <img :src="item.image" class="w-100">
@@ -29,7 +37,7 @@
             <!-- Content -->
             <!-- SideBar -->
             <div class="col-sm-4 col-xs-12 p-1 sidebar">
-                <div class="article-list border mb-3 p-3" v-for="(item, index) in variable" :key="item.id" :index="index" v-show="index%4 == 0">
+                <div class="article-list border mb-3 p-3" v-for="(item, index) in articles" :key="item.id" :index="index" v-show="index%4 == 0">
                     <div class="w-100 border-bottom">
                         <img :src="item.image" class="w-100">
                     </div>             
@@ -59,15 +67,35 @@ export default {
   data(){
     return {
         articles:[],
+        pagination: {},
     }
   },
   methods:{
-      caps: function(text){
-          return text.charAt(0).toUpperCase() + text.slice(1)
-      },
+    caps: function(text){
+        return text.charAt(0).toUpperCase() + text.slice(1)
+    },
+    fetchArticles(page_url) {
+      let vm = this;
+      postService.getArticleAll(page_url)
+        .then(res => {
+          this.articles = res.data;
+          vm.makePagination(res.meta, res.links);
+        })
+        .catch(err => console.log(err));
+    },
+    makePagination(meta, links) {
+        let pagination = {
+            current_page: meta.current_page,
+            last_page: meta.last_page,
+            next_page_url: links.next,
+            prev_page_url: links.prev
+        };
+        this.pagination = pagination;
+    },
+
   },
-  mounted:function(){
-        postService.getArticleAll(); 
+  created:function(){
+      fetchArticles(); 
   }
   
 }

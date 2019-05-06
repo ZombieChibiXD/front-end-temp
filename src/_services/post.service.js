@@ -44,9 +44,12 @@ function Post(){
             })
         })
     }
-    vm.getArticleAll = function () {
+    vm.getArticleAll = function (page_url,tag) {
         return new Promise(function (resolve,reject){
-            Vue.prototype.$http.get(Configuration.allArticle())
+            var pagelink =  page_url ? page_url : 
+                            tag == 'new'?   Configuration.serverLocation+Configuration.allArticle() : 
+                                            Configuration.serverLocation+Configuration.tagArticle(tag);
+            Vue.prototype.$http.get(pagelink)
             .then(response=>{
                 data_processed = response;
                 for (let index = 0; index < response.data.length; index++) {
@@ -55,17 +58,6 @@ function Post(){
                 }
 
                 resolve(data_processed);
-            })
-            .catch(response=>{
-                reject(response)
-            })
-        })
-    }
-    vm.getArticleTag = function (tag) {
-        return new Promise(function (resolve,reject){
-            Vue.prototype.$http.get(Configuration.tagArticle(tag))
-            .then(response=>{
-                // # code here..
             })
             .catch(response=>{
                 reject(response)
