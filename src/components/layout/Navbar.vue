@@ -1,7 +1,7 @@
 <template>
     <div>
     <b-navbar toggleable="lg" type="dark" class="navbars justify-content-center">
-        <b-navbar-brand :to="{name:'Home'}" class="d-flex justify-content-start mr-auto">Chibi's Website</b-navbar-brand>
+        <b-navbar-brand :to="{name:'Home'}" class="d-flex justify-content-start mr-auto">ThisIsNews.com</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -180,6 +180,7 @@ export default {
                 
                 this.isLogged = false;
                 console.error(res);
+                this.isLogged =  false;
                 this.$bus.$emit('logging_state',{ 'state' : 'error' })
                 this.checkingLogin = false;
             });
