@@ -18,10 +18,10 @@
       </section>
       <!-- ./Content -->
 
-      <!-- Footer -->
-      <!-- ./Footer -->
     </div>
+      <!-- Footer -->
     <Footers />
+      <!-- ./Footer -->
 
   </div>
   

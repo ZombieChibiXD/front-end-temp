@@ -1,6 +1,6 @@
 <template>
     <footer>
-        &copy;2019 @ZombieChibiXD
+        &copy;2019 @RossHeeji
     </footer>
 </template>
 
