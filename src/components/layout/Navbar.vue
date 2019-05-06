@@ -40,8 +40,9 @@ export default {
     name:'Navbar',
     data(){
         return {
-            isLogged:this.checkIfIsLogged(),
+            isLogged:false,
             fromLogin:false,
+            checkingLogin:false,
             UserData:{
                 name:''
             }
@@ -49,17 +50,18 @@ export default {
     }, 
     created () {
         this.$bus.$on('logged', () => {
-            this.isLogged = true;
-            if(this.isLogged){
+            if(!this.checkingLogin)
+                this.checkingLogin = true;
                 this.checkIfIsLogged()
-            }
         })
         // this.$bus.$on('fromlogin', () => {
         //     
         // })
     },
     mounted(){
+        this.$bus.$emit('logged', { 'state' : 'check' });
         this.$bus.$on('logging_state', emitted =>{
+            
             console.log(emitted);
             
             switch (emitted.state) {
@@ -97,7 +99,9 @@ export default {
                     this.$swal('Unexpected error occured!','Check your connection, and please reload the page','error');
                     break;
                 default:
+                    
                     console.log('Critical error in navbar swithcase : '+emitted);
+                    
                     console.log(emitted);
                     
                     break;
@@ -119,22 +123,28 @@ export default {
                     this.UserData.name = 'Logging out';
                     userCredential.logout()
                     .then(res=>{
-                        this.isLogged = false;
-                        this.$router.push({ name: 'Login'})
-                        this.$toasted.show("You have logged out", { 
-                            action : {
-                                text : 'Got it!',
-                                onClick : (e, toastObject) => { toastObject.goAway(0);  }
-                            },
-            
-                            theme: "outline", 
-                            position: "top-right", 
-                            duration : 5000
-                        });
-                        this.UserData.name = '';
-                        this.isLogged = false;
+                        if(res == 'trues'){
+                            this.isLogged = false;
+                            this.$router.push({ name: 'Login'})
+                            this.$toasted.show("You have logged out", { 
+                                action : {
+                                    text : 'Got it!',
+                                    onClick : (e, toastObject) => { toastObject.goAway(0);  }
+                                },
+                
+                                theme: "outline", 
+                                position: "top-right", 
+                                duration : 5000
+                            });
+                        }
+                        else{
+                            this.isLogged = false;
+                            this.$router.push({ name: 'Login'})
+                        }
                     })
                     .catch(res=>{
+                        this.UserData.name = '';
+                        this.isLogged = false;
                         console.err(res)
                     });
                 }
@@ -143,13 +153,15 @@ export default {
         checkIfIsLogged () {
             userCredential.verify()
             .then(res =>{
+                
                 console.log('Verify Response : ' + res);
                 if(res){
                     if(!userCredential.credential.name){
                         this.UserData.name = 'Getting User...';
                         userCredential.getInfo()
                         .then(res =>{
-                            console.log(userCredential.credential.name);
+                            
+                            console.log(res.name);
                             this.UserData.name =  userCredential.credential.name.replace(/ .*/,'');
                         });
                     }
@@ -162,10 +174,14 @@ export default {
                     this.$bus.$emit('logging_state',{ 'state' : 'logged'});
                 }
                 this.isLogged = res ? true : false;
+                this.checkingLogin = false;
             })
             .catch(res=>{
+                
+                this.isLogged = false;
                 console.error(res);
                 this.$bus.$emit('logging_state',{ 'state' : 'error' })
+                this.checkingLogin = false;
             });
         }
 

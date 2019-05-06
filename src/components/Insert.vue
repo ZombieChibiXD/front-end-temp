@@ -4,24 +4,25 @@
                <form @submit.prevent="handleSubmit">
                     <div class="form-group">
                       <label for="">Title</label>
-                      <input type="text" name="title" v-model="formdata.title" class="form-control w-lg-75" placeholder="Title" aria-describedby="title">
+                      <input type="text" name="title" v-model="formdata.title" 
+                      class="form-control w-lg-75 w-xs-100" placeholder="Title" aria-describedby="title" required>
                     </div>
                     <div class="row">
-                        <div class="col">
+                        <div class="col-md-6 col-xs-12">
                             <div class="form-group">
                             <label for="">Tag</label>
-                                <select v-model="formdata.tag" class="form-control w-lg-25" name="tag">
+                                <select v-model="formdata.tag" class="form-control w-lg-25" required>
                                     <option value="">Choose news tag</option>
                                     <option value="politic">Politic</option>
-                                    <option value="sport">Sport</option>
+                                    <option value="sports">Sports</option>
                                     <option value="lifestyle">Lifestyle</option>
                                     <option value="entertainment">Entertainment</option>
                                 </select>
                             </div>         
                         </div>
-                        <div class="col">
+                        <div class="col-md-6 col-xs-12">
                             <div class="form-group">
-                            <label for="">Cover Image:</label> 
+                            <label for="">Image:</label> 
                             <b-button-group class="w-100">
                                 <input type="file" id="file" ref="file" class="btn btn-sm btn-default border-primary w-50" v-on:change="handleFileUpload()"/>
                                 <button type="button" class="btn border-danger btn-warning w-50" v-show="formdata.cover_image" v-on:click="removeFile()" >Cancel</button>

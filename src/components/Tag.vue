@@ -12,12 +12,29 @@
             </ul>
         </nav>
         <div class="row py-5">
+            <!-- SideBar -->
+            <div class="col-sm-5 col-xs-12 py-0  sidebar">
+                <div class="article-list border mb-3 p-3" v-for="(item, index) in articles" :key="item.id" :index="index" v-show="index>=4">
+                    <div class="w-100 border-bottom">
+                        <img :src="item.cover_image" height="250px">
+                    </div>             
+                    <h3>
+                        <router-link :to="{ name: 'Content',  params: { article_id:  item.id } }">
+                            {{ item.title }}
+                        </router-link>
+                    </h3>
+                    <p class="text-left">
+                        {{ item.content }}
+                    </p>
+                </div>
+            </div>
+            <!-- SideBar -->
             <!-- Content -->
-            <div class="col-sm-8 col-xs-12 p-0">
-                <div class="article-list border mb-3 p-3" v-for="(item, index) in articles" :key="item.id" :index="index" v-show="!(index%4)==0">
+            <div class="col-sm-7 col-xs-12 py-0">
+                <div class="article-list border mb-3 p-3" v-for="(item, index) in articles" :key="item.id" :index="index" v-show="index<4">
                     <div class="row border-between ">
                         <div class="col-sm-5 col-xs-12 ">
-                            <img :src="item.image" class="w-100">
+                            <img :src="item.cover_image" height="250px">
                         </div>
                         <div class="col-sm-7 col-xs-12 ">
                             <div class="w-100 border-bottom">
@@ -35,23 +52,6 @@
                 </div>
             </div>
             <!-- Content -->
-            <!-- SideBar -->
-            <div class="col-sm-4 col-xs-12 p-1 sidebar">
-                <div class="article-list border mb-3 p-3" v-for="(item, index) in articles" :key="item.id" :index="index" v-show="index%4 == 0">
-                    <div class="w-100 border-bottom">
-                        <img :src="item.image" class="w-100">
-                    </div>             
-                    <h3>
-                        <router-link :to="{ name: 'Content',  params: { article_id:  item.id } }">
-                            {{ item.title }}
-                        </router-link>
-                    </h3>
-                    <p class="text-left">
-                        {{ item.content }}
-                    </p>
-                </div>
-            </div>
-            <!-- SideBar -->
         </div>
     </div>
     
@@ -60,26 +60,28 @@
 <script>
 import postService from '@/_services/post.service'
 export default {
-  name: 'Tag',
-  props: {
-    tagname: String
-  },
-  data(){
-    return {
-        articles:[],
-        pagination: {},
-    }
-  },
-  methods:{
+    name: 'Tag',
+    props: {
+        tagname: String
+    },
+    data(){
+        return {
+            articles:[],
+            pagination: {},
+        }
+    },
+    methods:{
     caps: function(text){
         return text.charAt(0).toUpperCase() + text.slice(1)
     },
-    fetchArticles(page_url) {
-      let vm = this;
-      postService.getArticleAll(page_url)
+    fetchArticles(page_url,tagnames) {
+        let vm = this;
+        postService.getArticleAll(page_url,tagnames)
         .then(res => {
-          this.articles = res.data;
-          vm.makePagination(res.meta, res.links);
+            this.articles = res.data;
+            console.log(this.articles);
+            
+            vm.makePagination(res.meta, res.links);
         })
         .catch(err => console.log(err));
     },
@@ -93,11 +95,19 @@ export default {
         this.pagination = pagination;
     },
 
-  },
-  created:function(){
-      fetchArticles(); 
-  }
-  
+    },
+    created:function(){
+        console.log(this.tagname);
+        
+        this.fetchArticles(null,this.tagname); 
+    },
+    watch: {
+        '$route' (to, from) {
+            if (to.path != from.path) {
+                this.fetchArticles(null,this.tagname); 
+            } 
+        }
+    }
 }
 </script>
 <style>

@@ -1,8 +1,7 @@
 <template>
-    <div>
-        <h1 class="display-5 mx-auto mt3">Logging Out</h1>
-        <div class="someimage mx-auto">Hey</div>
-        <a @click="asd()" href="#" class="mx-auto">Click me</a>
+    <div class="container-fluid">
+        <div>&nbsp;</div>
+        <a @click="asd()" href="#" class="mx-auto my-auto btn btn-lg btn-danger">Click me to log out!</a>
     </div>
 </template>
 
@@ -13,7 +12,15 @@ export default {
     methods:{
         asd(){
             userCredential.logout();
+            userCredential.clean();
+            this.$bus.$emit('logged', { 'state' : 'out' });
+            this.$router.push({name:'Home'})
         }
+    }, 
+    beforeRouteEnter(to,from,next){
+            userCredential.logout();
+            userCredential.clean();
+            next({name:'Home'})
     }
 }
 </script>

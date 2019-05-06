@@ -47,13 +47,23 @@ function Post(){
     vm.getArticleAll = function (page_url,tag) {
         return new Promise(function (resolve,reject){
             var pagelink =  page_url ? page_url : 
-                            tag == 'new'?   Configuration.serverLocation+Configuration.allArticle() : 
+                            tag == 'new' ?  Configuration.serverLocation+Configuration.allArticle() : 
                                             Configuration.serverLocation+Configuration.tagArticle(tag);
             Vue.prototype.$http.get(pagelink)
             .then(response=>{
-                data_processed = response;
-                for (let index = 0; index < response.data.length; index++) {
-                    data_processed.data[index].cover_image = Configuration.serverLocation + 'img/cover_images/' + response.data[index].cover_image;
+                var data_processed = {
+                    data:[],
+                    meta:{},
+                    links:{}
+                };
+                data_processed.data = response.data.data;
+                data_processed.meta = response.data.meta;
+                data_processed.links = response.data.links;
+                console.log(data_processed);
+                
+                for (let index = 0; index < response.data.data.length; index++) {
+                    data_processed.data[index].cover_image =    Configuration.serverLocation + 'img/cover_images/' + 
+                                                                response.data.data[index].cover_image;
                     
                 }
 

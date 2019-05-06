@@ -101,10 +101,10 @@ function User(){
                 localStorage.removeItem(vm.nameStorageField);
 
                 if(response.status =='200'){
-                    resolve(1)
+                    resolve('trues')
                 }
                 else{
-                    resolve(0)
+                    resolve('outs')
                     console.error('You already logged out');
                 }
             }).catch(response =>{
@@ -114,6 +114,12 @@ function User(){
             });
         });
         
+    }
+    
+    vm.clean = function(){
+        vm.credential = vm.credentialEmpty;
+        Vue.prototype.$http.defaults.headers.Authorization = null;
+        localStorage.removeItem(vm.nameStorageField);
     }
 
     vm.init = function(){
@@ -165,7 +171,7 @@ function User(){
                 resolve(credential)
             }).catch(response =>{
                 console.log('Error Retriving User Data');
-                console.log(response);
+                reject(response)
             });
         });
     }
