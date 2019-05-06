@@ -163,7 +163,7 @@ function User(){
                     vm.credential.username    = credential.username;
                     vm.credential.level       = credential.level;
                     vm.credential.email       = credential.email;
-                    vm.credential.user_image  = credential.user_image;
+                    vm.credential.user_image  = Configuration.serverLocation+credential.user_image;
                 }
                 else{
                     console.error('Retriving User Credential Failed. Did you log in?');

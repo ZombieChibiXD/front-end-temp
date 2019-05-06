@@ -130,6 +130,14 @@ export default {
             this.valid_file = true;
             this.fileIsThere = false;
         }
+    },
+    beforeRouteEnter(to,from,next){
+        // userStorage.verify()
+        //     .then(res=>{
+        //         if(res){
+        //             next({name:'Login'})
+        //         }
+        //     })
     }
 }
 </script>

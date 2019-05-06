@@ -14,9 +14,11 @@
         <div class="row py-5">
             <!-- SideBar -->
             <div class="col-sm-5 col-xs-12 py-0  sidebar">
-                <div class="article-list border mb-3 p-3" v-for="(item, index) in articles" :key="item.id" :index="index" v-show="index>=4">
+                <div class="article-list border mb-3 p-1" v-for="(item, index) in articles.slice(0, 4)" :key="item.id" :index="index">
                     <div class="w-100 border-bottom">
-                        <img :src="item.cover_image" height="250px">
+                        <div class="content-image container-fluid">
+                            <img :src="item.cover_image" class="content-img-lg img-responsive w-100 h-100">
+                        </div>
                     </div>             
                     <h3>
                         <router-link :to="{ name: 'Content',  params: { article_id:  item.id } }">
@@ -31,10 +33,12 @@
             <!-- SideBar -->
             <!-- Content -->
             <div class="col-sm-7 col-xs-12 py-0">
-                <div class="article-list border mb-3 p-3" v-for="(item, index) in articles" :key="item.id" :index="index" v-show="index<4">
+                <div class="article-list border mb-3 p-1" v-for="(item, index) in articles.slice(4, 10)" :key="item.id" :index="index">
                     <div class="row border-between ">
                         <div class="col-sm-5 col-xs-12 ">
-                            <img :src="item.cover_image" height="250px">
+                            <div class="content-image container-fluid mx-auto">
+                                <img :src="item.cover_image" class="content-img img-responsive w-100 h-100">
+                            </div>
                         </div>
                         <div class="col-sm-7 col-xs-12 ">
                             <div class="w-100 border-bottom">
@@ -71,29 +75,29 @@ export default {
         }
     },
     methods:{
-    caps: function(text){
-        return text.charAt(0).toUpperCase() + text.slice(1)
-    },
-    fetchArticles(page_url,tagnames) {
-        let vm = this;
-        postService.getArticleAll(page_url,tagnames)
-        .then(res => {
-            this.articles = res.data;
-            console.log(this.articles);
-            
-            vm.makePagination(res.meta, res.links);
-        })
-        .catch(err => console.log(err));
-    },
-    makePagination(meta, links) {
-        let pagination = {
-            current_page: meta.current_page,
-            last_page: meta.last_page,
-            next_page_url: links.next,
-            prev_page_url: links.prev
-        };
-        this.pagination = pagination;
-    },
+        caps: function(text){
+            return text.charAt(0).toUpperCase() + text.slice(1)
+        },
+        fetchArticles(page_url,tagnames) {
+            let vm = this;
+            postService.getArticleAll(page_url,tagnames)
+            .then(res => {
+                this.articles = res.data;
+                console.log(this.articles);
+                
+                vm.makePagination(res.meta, res.links);
+            })
+            .catch(err => console.log(err));
+        },
+        makePagination(meta, links) {
+            let pagination = {
+                current_page: meta.current_page,
+                last_page: meta.last_page,
+                next_page_url: links.next,
+                prev_page_url: links.prev
+            };
+            this.pagination = pagination;
+        },
 
     },
     created:function(){
@@ -126,5 +130,20 @@ export default {
 }
 .article-list:hover{
     background-color: rgba(117, 112, 112, 0.284);
+}
+.content-image{
+    padding: 0;
+}
+.content-img{
+    padding: 0;
+    max-height: 275px;
+    min-height: 175px;
+    
+}
+.content-img-lg{
+    padding: 0;
+    min-height: 210px;
+    max-height: 275px;
+    
 }
 </style>

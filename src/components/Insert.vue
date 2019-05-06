@@ -46,6 +46,7 @@
 import postService from '@/_services/post.service'
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import userStorage from '@/_services/user.service'
 export default {
 
     name:'Insert',
@@ -131,7 +132,15 @@ export default {
             this.valid_file = true;
             this.fileIsThere = false;
         }
-    }
+    },
+    // beforeRouteEnter(to,from,next){
+    //     userStorage.verify()
+    //         .then(res=>{
+    //             if(res){
+    //                 next({name:'Login'})
+    //             }
+    //         })
+    // }
 }
 </script>
 

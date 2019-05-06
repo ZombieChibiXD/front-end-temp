@@ -167,6 +167,14 @@ export default {
     // }, 100);
     
         
-    }
+    },
+    // beforeRouteEnter(to,from,next){
+    //     userStorage.verify()
+    //         .then(res=>{
+    //             if(res){
+    //                 next({name:'Home'})
+    //             }
+    //         })
+    // }
 };
 </script>

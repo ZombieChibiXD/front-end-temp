@@ -26,6 +26,7 @@
                 <!-- Using 'button-content' slot -->
                     <template v-if="isLogged === true" slot="button-content"><em>{{ UserData.name }}</em></template>
                     <b-dropdown-item v-if="isLogged === true" href="#"  >Profile</b-dropdown-item>
+                    <b-dropdown-item v-if="isLogged === true && UserData.level<2" :to="{ name:'Admin' }"  >Admin Page</b-dropdown-item>
                     <b-dropdown-item v-if="isLogged === true" @click.prevent="signout">Sign Out</b-dropdown-item>
                 </b-nav-item-dropdown>
             </b-navbar-nav>            
@@ -44,7 +45,8 @@ export default {
             fromLogin:false,
             checkingLogin:false,
             UserData:{
-                name:''
+                name:'',
+                level:''
             }
         }
     }, 
@@ -141,9 +143,14 @@ export default {
                             this.isLogged = false;
                             this.$router.push({ name: 'Login'})
                         }
+                        this.UserData.name = '';
+                        this.UserData.level = '';
+                        this.UserData.user_image = '';
                     })
                     .catch(res=>{
                         this.UserData.name = '';
+                        this.UserData.level = '';
+                        this.UserData.user_image = '';
                         this.isLogged = false;
                         console.err(res)
                     });
@@ -163,6 +170,8 @@ export default {
                             
                             console.log(res.name);
                             this.UserData.name =  userCredential.credential.name.replace(/ .*/,'');
+                            this.UserData.level = userCredential.credential.level;
+                            this.UserData.user_image = userCredential.credential.user_image;
                         });
                     }
                     else{
