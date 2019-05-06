@@ -17,7 +17,7 @@
                                     <option value="lifestyle">Lifestyle</option>
                                     <option value="entertainment">Entertainment</option>
                                 </select>
-                            </div>                                
+                            </div>         
                         </div>
                         <div class="col">
                             <div class="form-group">
