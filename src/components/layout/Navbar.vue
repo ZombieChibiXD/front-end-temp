@@ -20,7 +20,6 @@
                 <b-nav-item v-if="isLogged === false" :to="{ name: 'Login' }" active-class="active disabled">Login</b-nav-item>
                 <b-nav-item v-if="isLogged === false" :to="{ name: 'Register' }" active-class="active disabled">Register</b-nav-item>
 
-                <b-nav-item v-if="isLogged === true" :to="{ name: 'CreateArtikel' }" active-class='active disabled'>Create article</b-nav-item>    
                 <!-- Modal Component -->
                 <b-nav-item-dropdown v-if="isLogged === true" right >
                 <!-- Using 'button-content' slot -->
