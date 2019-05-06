@@ -48,18 +48,34 @@ export const router = new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ '@/views/Admin.vue')
+      component: () => import(/* webpackChunkName: "about" */ '@/views/Admin.vue'),
+      children: [
+        {
+          path: 'article/write',
+          name: 'CreateArtikel',
+          component: () => import(/* webpackChunkName: "Insert" */ '@/components/admin/Insert.vue'),
+        },
+        {
+          // UserPosts will be rendered inside User's <router-view>
+          // when /user/:id/posts is matched
+          path: 'article/list',
+          name: 'ListArticle',
+          component: () => import(/* webpackChunkName: "about" */ '@/components/admin/List.vue'),
+        },
+        {
+          // UserPosts will be rendered inside User's <router-view>
+          // when /user/:id/posts is matched
+          path: 'article/:id/edit',
+          name: 'UpdateArticle',
+          component: () => import(/* webpackChunkName: "about" */ '@/components/admin/Update.vue'),
+        }
+      ]
     },
     {
       path: '/tag/:tagname',
       name: 'Tag',
       component: Tag,
       props: true ,
-    },
-    {
-      path: '/article/create',
-      name: 'CreateArtikel',
-      component: () => import(/* webpackChunkName: "about" */ '@/components/Insert.vue'),
     },
     {
       path: '/article/:article_id',
