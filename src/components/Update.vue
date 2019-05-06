@@ -35,18 +35,19 @@
                     </div>
                     <!-- name="content" placeholder="Insert Content Here.." -->
                     <input type="submit" :class="{ 'disabled': submitted || !valid_file }" value="Post!" class="btn btn-primary">
+                    
                </form>
+        <code>{{ formdata.content }}</code>
          </div>
      </div>
 </template>
 
 <script>
-import postService from '@/_services/post.service'
+import { serveConf as Configuration } from "@/_config";
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 export default {
-
-    name:'Insert',
+    name:'Update',
     components:{
          ckeditor : CKEditor.component
     },
@@ -84,10 +85,10 @@ export default {
                 });
                 
                 
-                postService.postArticle(this.formdata)
+                this.$http.post(Configuration.postArticle, this.formdata)
                 .then(res=>{
                     this.$swal.close();
-                    console.log('Output is: '+res);
+                    console.log(res);
                     
                     if(res == 'success'){
                         this.$toasted.show("You have posted the article!", { 
@@ -99,23 +100,23 @@ export default {
                             position: "top-right", 
                             duration : 5000
                         });
-                        this.$router.push({ name: 'Tag',params: { tagname: 'new' } })
+                    //     this.$router.push({ name: 'Tag',params: { tagname: 'new' } })
                     }
                 })
                 .catch(res=>{
-                    console.log('Err'+res);
+                    console.log(res);
                     this.$swal.hideLoading();
                     if(res.status == 422){
                         this.$swal('Post Failed','Post already exist!','error');
                     }
                     else{
-                        this.$swal('Oops','Post Failed','error');
+                        this.$swal('Oops','Register Failed','error');
                     }
                 })
             }
             else{
                 this.submitted = false;
-                this.$swal('Oops','Post Failed','error');
+                this.$swal('Oops','Register Failed','error');
             }
         },
         handleFileUpload(){

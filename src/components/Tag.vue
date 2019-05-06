@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import postService from '@/_services/post.service'
 export default {
   name: 'Tag',
   props: {
@@ -57,84 +58,16 @@ export default {
   },
   data(){
     return {
-            variable:[
-            {
-                id:1,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg/300px-Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg',
-                link: 'ini link'
-            },
-            {
-                id:2,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg/300px-Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg',
-                link: 'ini link'
-            },
-            {
-                id:3,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg/300px-Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg',
-                link: 'ini link'
-            },
-            {
-                id:4,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg/300px-Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg',
-                link: 'ini link'
-            },
-            {
-                id:5,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg/300px-Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg',
-                link: 'ini link'
-            },
-            {
-                id:6,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg/300px-Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg',
-                link: 'ini link'
-            },
-            {
-                id:7,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg/300px-Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg',
-                link: 'ini link'
-            },
-            {
-                id:8,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg/300px-Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg',
-                link: 'ini link'
-            },
-            {
-                id:9,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg/300px-Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg',
-                link: 'ini link'
-            },
-            {
-                id:10,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg/300px-Mount_Fuji_Japan_with_Snow%2C_Lakes_and_Surrounding_Mountains.jpg',
-                link: 'ini link'
-            },
-        ],
+        articles:[],
     }
   },
   methods:{
       caps: function(text){
           return text.charAt(0).toUpperCase() + text.slice(1)
-      }
+      },
+  },
+  mounted:function(){
+        postService.getArticleAll(); 
   }
   
 }

@@ -60,7 +60,7 @@ body {
   z-index: 2; */
   /* padding-bottom: 5vh; height of your footer */ 
   width: 100%;
-  margin-bottom: 25vh;
+  margin-bottom: 0;
   position: relative;
   z-index: 2;
 }
