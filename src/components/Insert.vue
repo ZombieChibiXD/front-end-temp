@@ -11,9 +11,10 @@
                             <div class="form-group">
                             <label for="">Tag</label>
                                 <select v-model="formdata.tag" class="form-control w-lg-25" name="tag">
-                                    <option value="politic">politic</option>
-                                    <option value="sport">sport</option>
-                                    <option value="lifestyle">lifestyle</option>
+                                    <option value="">Choose news tag</option>
+                                    <option value="politic">Politic</option>
+                                    <option value="sport">Sport</option>
+                                    <option value="lifestyle">Lifestyle</option>
                                     <option value="entertainment">Entertainment</option>
                                 </select>
                             </div>                                

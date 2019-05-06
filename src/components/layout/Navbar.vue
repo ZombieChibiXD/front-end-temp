@@ -12,8 +12,7 @@
                 <b-nav-item :to="{ name: 'Tag',params: { tagname: 'entertaiment' } }" active-class='active disabled'>Entertaiment</b-nav-item>
                 <b-nav-item :to="{ name: 'Tag',params: { tagname: 'sports' } }" active-class='active disabled'>Sports</b-nav-item>
                 <b-nav-item :to="{ name: 'Tag',params: { tagname: 'lifestyle' } }" active-class='active disabled'>Lifestyle</b-nav-item>
-                <b-nav-item :to="{ name:'About' } " active-class="active disabled">About</b-nav-item>
-                <b-nav-item :to="{ name: 'CreateArtikel' }" active-class='active disabled'>Insert</b-nav-item>
+                <b-nav-item :to="{ name: 'Tag',params: { tagname: 'politic' } }" active-class='active disabled'>Politic</b-nav-item>
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->
