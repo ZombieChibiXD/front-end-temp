@@ -17,7 +17,7 @@
                          <td>{{ article.title }}</td>
                          <td>{{ article.tag  }}</td>
                          <td><textarea v-model="article.content" class="form-control" readonly></textarea></td>
-                         <td>sdf</td>
+                         <td><button class="btn btn-danger">Delete</button></td>
                      </tr>
                  </tbody>
                  <tfoot>

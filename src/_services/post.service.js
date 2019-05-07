@@ -76,9 +76,13 @@ function Post(){
     }
     vm.getArticleId = function (id) {
         return new Promise(function (resolve,reject){
-            Vue.prototype.$http.get(Configuration.idArticle(id))
+            Vue.prototype.$http.get(Configuration.serverLocation+Configuration.idArticle(id))
             .then(response=>{
-                // # code here..
+                var outs = response.data.data;
+                outs.cover_image = Configuration.serverLocation + 'img/cover_images/'+outs.cover_image;
+                console.log(outs);
+                
+                resolve(outs);
             })
             .catch(response=>{
                 reject(response)
