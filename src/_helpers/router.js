@@ -52,21 +52,22 @@ export const router = new Router({
       children: [
         {
           path: 'article/write',
-          name: 'CreateArtikel',
+          name: 'Admin.CreateArtikel',
           component: () => import(/* webpackChunkName: "Insert" */ '@/components/admin/Insert.vue'),
         },
         {
           // UserPosts will be rendered inside User's <router-view>
           // when /user/:id/posts is matched
           path: 'article/list',
-          name: 'ListArticle',
+          name: 'Admin.ListArticle',
           component: () => import(/* webpackChunkName: "about" */ '@/components/admin/List.vue'),
         },
         {
           // UserPosts will be rendered inside User's <router-view>
           // when /user/:id/posts is matched
-          path: 'article/:id/edit',
-          name: 'UpdateArticle',
+          path: 'article/:article_id_route/edit/',
+          name: 'Admin.UpdateArticle',
+          props: true ,
           component: () => import(/* webpackChunkName: "about" */ '@/components/admin/Update.vue'),
         }
       ]

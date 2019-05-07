@@ -4,23 +4,25 @@
                <form @submit.prevent="handleSubmit">
                     <div class="form-group">
                       <label for="">Title</label>
-                      <input type="text" name="title" v-model="formdata.title" class="form-control w-lg-75" placeholder="Title" aria-describedby="title">
+                      <input type="text" name="title" v-model="formdata.title" 
+                      class="form-control w-lg-75 w-xs-100" placeholder="Title" aria-describedby="title" required>
                     </div>
                     <div class="row">
-                        <div class="col">
+                        <div class="col-md-6 col-xs-12">
                             <div class="form-group">
                             <label for="">Tag</label>
-                                <select v-model="formdata.tag" class="form-control w-lg-25" name="tag">
-                                    <option value="politic">politic</option>
-                                    <option value="sport">sport</option>
-                                    <option value="lifestyle">lifestyle</option>
+                                <select v-model="formdata.tag" class="form-control w-lg-25" required>
+                                    <option value="">Choose news tag</option>
+                                    <option value="politic">Politic</option>
+                                    <option value="sports">Sports</option>
+                                    <option value="lifestyle">Lifestyle</option>
                                     <option value="entertainment">Entertainment</option>
                                 </select>
-                            </div>                                
+                            </div>         
                         </div>
-                        <div class="col">
+                        <div class="col-md-6 col-xs-12">
                             <div class="form-group">
-                            <label for="">Cover Image:</label> 
+                            <label for="">Image:</label> 
                             <b-button-group class="w-100">
                                 <input type="file" id="file" ref="file" class="btn btn-sm btn-default border-primary w-50" v-on:change="handleFileUpload()"/>
                                 <button type="button" class="btn border-danger btn-warning w-50" v-show="formdata.cover_image" v-on:click="removeFile()" >Cancel</button>
@@ -31,23 +33,24 @@
                     </div>
                     <div class="form-group">
                       <label for="">Content</label>
-                      <ckeditor class="document-editor" v-model="formdata.content" :editor="editor" ></ckeditor>
+                      <ckeditor class="document-editor" v-model="formdata.body" :editor="editor" ></ckeditor>
                     </div>
                     <!-- name="content" placeholder="Insert Content Here.." -->
                     <input type="submit" :class="{ 'disabled': submitted || !valid_file }" value="Post!" class="btn btn-primary">
-                    
                </form>
-        <code>{{ formdata.content }}</code>
          </div>
      </div>
 </template>
 
 <script>
-import { serveConf as Configuration } from "@/_config";
+import postService from '@/_services/post.service'
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import userStorage from '@/_services/user.service'
 export default {
-    name:'Update',
+    props: {
+      article_id_route: String
+    },
     components:{
          ckeditor : CKEditor.component
     },
@@ -55,10 +58,11 @@ export default {
          return{
               editor: ClassicEditor,
               formdata:{
-                   title:'',
-                   tag:'',
-                   content:'',
-                   cover_image:'',
+                article_id:'', 
+                title:'',
+                tag:'',
+                body:'',
+                cover_image:'',
               },
             submitted: false,
             valid_file: true,
@@ -66,14 +70,22 @@ export default {
          };
     },
     methods:{
+        fetchArticle(id) {
+            let vm = this;
+            postService.getArticleId(id)
+            .then(res => {
+                this.formdata = res;
+                this.formdata.cover_image = '';
+            })
+            .catch(err => console.log(err));
+        },
         handleSubmit (e) {
             this.submitted = true;
+            this.formdata.article_id = this.article_id_route;
             console.log(this.formdata);
             if (
                 this.formdata
-            ) {
-                console.log(this.formdata);
-                
+            ) {                
                 this.$swal({
                     title: 'Posting...',
                     onOpen: () => {
@@ -85,12 +97,12 @@ export default {
                 });
                 
                 
-                this.$http.post(Configuration.postArticle, this.formdata)
+                postService.postArticleId(this.formdata)
                 .then(res=>{
                     this.$swal.close();
-                    console.log(res);
+                    console.log('Output is: '+res);
                     
-                    if(res == 'success'){
+                    if(res.status == 200){
                         this.$toasted.show("You have posted the article!", { 
                             action : {
                                 text : 'Got it!',
@@ -100,23 +112,23 @@ export default {
                             position: "top-right", 
                             duration : 5000
                         });
-                    //     this.$router.push({ name: 'Tag',params: { tagname: 'new' } })
+                        this.$router.push({ name: 'Tag',params: { tagname: 'new' } })
                     }
                 })
                 .catch(res=>{
-                    console.log(res);
+                    console.log('Err'+res);
                     this.$swal.hideLoading();
                     if(res.status == 422){
                         this.$swal('Post Failed','Post already exist!','error');
                     }
                     else{
-                        this.$swal('Oops','Register Failed','error');
+                        this.$swal('Oops','Post Failed','error');
                     }
                 })
             }
             else{
                 this.submitted = false;
-                this.$swal('Oops','Register Failed','error');
+                this.$swal('Oops','Post Failed','error');
             }
         },
         handleFileUpload(){
@@ -131,14 +143,17 @@ export default {
             this.fileIsThere = false;
         }
     },
-    beforeRouteEnter(to,from,next){
-        // userStorage.verify()
-        //     .then(res=>{
-        //         if(res){
-        //             next({name:'Login'})
-        //         }
-        //     })
+    created:function () {
+        this.fetchArticle(this.article_id_route);
     }
+    // beforeRouteEnter(to,from,next){
+    //     userStorage.verify()
+    //         .then(res=>{
+    //             if(res){
+    //                 next({name:'Login'})
+    //             }
+    //         })
+    // }
 }
 </script>
 

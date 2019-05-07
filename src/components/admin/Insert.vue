@@ -33,7 +33,7 @@
                     </div>
                     <div class="form-group">
                       <label for="">Content</label>
-                      <ckeditor class="document-editor" v-model="formdata.content" :editor="editor" ></ckeditor>
+                      <ckeditor class="document-editor" v-model="formdata.body" :editor="editor" ></ckeditor>
                     </div>
                     <!-- name="content" placeholder="Insert Content Here.." -->
                     <input type="submit" :class="{ 'disabled': submitted || !valid_file }" value="Post!" class="btn btn-primary">
@@ -48,8 +48,6 @@ import CKEditor from '@ckeditor/ckeditor5-vue';
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import userStorage from '@/_services/user.service'
 export default {
-
-    name:'Insert',
     components:{
          ckeditor : CKEditor.component
     },
@@ -59,7 +57,7 @@ export default {
               formdata:{
                    title:'',
                    tag:'',
-                   content:'',
+                   body:'',
                    cover_image:'',
               },
             submitted: false,

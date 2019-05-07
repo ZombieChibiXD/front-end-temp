@@ -7,12 +7,15 @@ function Post(){
             let formData = new FormData();
             formData.append('title', formdata.title);
             formData.append('tag', formdata.tag);
-            formData.append('body', formdata.content);
+            formData.append('body', formdata.body);
             formData.append('cover_image', formdata.cover_image); 
+            console.log(formData)
             Vue.prototype.$http.post(Configuration.postArticle(), formData, { 
                 headers : { 'Content-Type': 'multipart/form-data' } 
             })
             .then(response=>{
+                console.log(response);
+                
                 if(response.status == 201){
                     resolve('success');
                 }
@@ -23,21 +26,19 @@ function Post(){
             })
         })
     }
-    vm.postArticleId = function (formdata,id) {
+    vm.postArticleId = function (formdata) {
         return new Promise(function (resolve,reject){
             let formData = new FormData();
+            formData.append('article_id', formdata.article_id);
             formData.append('title', formdata.title);
             formData.append('tag', formdata.tag);
-            formData.append('body', formdata.content);
+            formData.append('body', formdata.body);
             formData.append('cover_image', formdata.cover_image); 
-            Vue.prototype.$http.put(Configuration.idArticle(id), formData, { 
+            Vue.prototype.$http.post(Configuration.postArticle(), formData, { 
                 headers : { 'Content-Type': 'multipart/form-data' } 
             })
             .then(response=>{
-                if(response.status == 201){
-                    resolve('success');
-                }
-                reject(response)
+                resolve(response)
             })
             .catch(response=>{
                 reject(response)
@@ -47,8 +48,8 @@ function Post(){
     vm.getArticleAll = function (page_url,tag) {
         return new Promise(function (resolve,reject){
             var pagelink =  page_url ? page_url : 
-                            tag == 'new' ?  Configuration.serverLocation+Configuration.allArticle() : 
-                                            Configuration.serverLocation+Configuration.tagArticle(tag);
+                            tag == 'new' ?  Configuration.allArticle() : 
+                                            Configuration.tagArticle(tag);
             Vue.prototype.$http.get(pagelink)
             .then(response=>{
                 var data_processed = {
@@ -83,6 +84,17 @@ function Post(){
                 console.log(outs);
                 
                 resolve(outs);
+            })
+            .catch(response=>{
+                reject(response)
+            })
+        })
+    }
+    vm.deleteArticleId = function (id) {
+        return new Promise(function (resolve,reject){
+            Vue.prototype.$http.delete(Configuration.serverLocation+Configuration.idArticle(id))
+            .then(response=>{
+                resolve(response);
             })
             .catch(response=>{
                 reject(response)
