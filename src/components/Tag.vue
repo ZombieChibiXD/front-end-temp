@@ -2,13 +2,23 @@
     <div>
         <!-- <h1>Menampilkan Berita : {{ caps(tagname) }}</h1>
         <hr> -->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" @click="fetchArticles(pagination.prev_page_url)">Previous</a></li>
 
+                <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
+            
+                <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item"><a class="page-link" href="#" @click="fetchArticles(pagination.next_page_url)">Next</a></li>
+            </ul>
+        </nav>
         <div class="row py-5">
             <!-- SideBar -->
-            <div class="col-sm-5 col-xs-12 p-1 sidebar">
-                <div class="article-list border mb-3 p-3" v-for="(item, index) in variable" :key="item.id" :index="index" v-show="index%4 == 0">
+            <div class="col-sm-5 col-xs-12 py-0  sidebar">
+                <div class="article-list border mb-3 p-1" v-for="(item, index) in articles.slice(0, 4)" :key="item.id" :index="index">
                     <div class="w-100 border-bottom">
-                        <img :src="item.image" class="w-100">
+                        <div class="content-image container-fluid">
+                            <img :src="item.cover_image" class="content-img-lg img-responsive w-100 h-100">
+                        </div>
                     </div>             
                     <h3>
                         <router-link :to="{ name: 'Content',  params: { article_id:  item.id } }">
@@ -22,10 +32,15 @@
             </div>
             <!-- SideBar -->
             <!-- Content -->
-            <div class="col-sm-7 col-xs-12 p-0">
-                <div class="article-list border mb-3 p-3" v-for="(item, index) in variable" :key="item.id" :index="index" v-show="!(index%4)==0">
+            <div class="col-sm-7 col-xs-12 py-0">
+                <div class="article-list border mb-3 p-1" v-for="(item, index) in articles.slice(4, 10)" :key="item.id" :index="index">
                     <div class="row border-between ">
-                        <div class="col-7">
+                        <div class="col-sm-5 col-xs-12 ">
+                            <div class="content-image container-fluid mx-auto">
+                                <img :src="item.cover_image" class="content-img img-responsive w-100 h-100">
+                            </div>
+                        </div>
+                        <div class="col-sm-7 col-xs-12 ">
                             <div class="w-100 border-bottom">
                                 <h3>
                                     <router-link :to="{ name: 'Content',  params: { article_id:  item.id } }">
@@ -37,9 +52,6 @@
                                 {{ item.content }}
                             </p>
                         </div>
-                        <div class="col-5">
-                            <img :src="item.image" class="w-100">
-                        </div>
                     </div>
                 </div>
             </div>
@@ -50,93 +62,56 @@
 </template>
 
 <script>
+import postService from '@/_services/post.service'
 export default {
-  name: 'Tag',
-  props: {
-    tagname: String
-  },
-  data(){
-    return {
-            variable:[
-            {
-                id:1,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png',
-                link: 'ini link'
-            },
-            {
-                id:2,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png',
-                link: 'ini link'
-            },
-            {
-                id:3,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png',
-                link: 'ini link'
-            },
-            {
-                id:4,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png',
-                link: 'ini link'
-            },
-            {
-                id:5,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png',
-                link: 'ini link'
-            },
-            {
-                id:6,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png',
-                link: 'ini link'
-            },
-            {
-                id:7,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png',
-                link: 'ini link'
-            },
-            {
-                id:8,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png',
-                link: 'ini link'
-            },
-            {
-                id:9,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png',
-                link: 'ini link'
-            },
-            {
-                id:10,
-                title: 'Presiden membunuh istrinya sendiri! Sungguh tragis',
-                content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo omnis dolor eligendi accusantium magnam voluptas perspiciatis consequatur nulla consectetur. Iste, in. Atque quos eaque maxime officia laborum assumenda quibusdam eum.',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png',
-                link: 'ini link'
-            },
-        ],
+    name: 'Tag',
+    props: {
+        tagname: String
+    },
+    data(){
+        return {
+            articles:[],
+            pagination: {},
+        }
+    },
+    methods:{
+        caps: function(text){
+            return text.charAt(0).toUpperCase() + text.slice(1)
+        },
+        fetchArticles(page_url,tagnames) {
+            let vm = this;
+            postService.getArticleAll(page_url,tagnames)
+            .then(res => {
+                this.articles = res.data;
+                console.log(this.articles);
+                
+                vm.makePagination(res.meta, res.links);
+            })
+            .catch(err => console.log(err));
+        },
+        makePagination(meta, links) {
+            let pagination = {
+                current_page: meta.current_page,
+                last_page: meta.last_page,
+                next_page_url: links.next,
+                prev_page_url: links.prev
+            };
+            this.pagination = pagination;
+        },
+
+    },
+    created:function(){
+        console.log(this.tagname);
+        
+        this.fetchArticles(null,this.tagname); 
+    },
+    watch: {
+        '$route' (to, from) {
+            if (to.path != from.path) {
+                this.fetchArticles(null,this.tagname); 
+            } 
+        }
     }
-  },
-  methods:{
-      caps: function(text){
-          return text.charAt(0).toUpperCase() + text.slice(1)
-      }
-  }
-  
 }
 </script>
 <style>
@@ -154,6 +129,21 @@ export default {
    display: none;
 }
 .article-list:hover{
-    background-color: aquamarine;
+    background-color: rgba(117, 112, 112, 0.284);
+}
+.content-image{
+    padding: 0;
+}
+.content-img{
+    padding: 0;
+    max-height: 275px;
+    min-height: 175px;
+    
+}
+.content-img-lg{
+    padding: 0;
+    min-height: 210px;
+    max-height: 275px;
+    
 }
 </style>
