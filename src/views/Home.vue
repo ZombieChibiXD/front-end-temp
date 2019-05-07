@@ -83,13 +83,12 @@ import postService from '@/_services/post.service'
 
 export default {
   name: 'home',
-  methods:{
-    checkAxios(){
-      post.test();
-    },
+  methods:{ 
+    // eslint-disable-next-line
     onSlideStart(slide) {
       this.sliding = true
     },
+    // eslint-disable-next-line
     onSlideEnd(slide) {
       this.sliding = false
     },
