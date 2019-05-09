@@ -1,7 +1,7 @@
 <template>
     <div>
     <div class="w-100 background-nav">&nbsp;</div>
-    <b-navbar toggleable="lg" type="dark" class="navbars justify-content-center" fixed="top">
+    <b-navbar toggleable="lg" type="dark" class="navbars justify-content-center w-100" fixed="top">
         <div class="fitter mx-2">&nbsp;</div>
         <b-navbar-brand :to="{name:'Home'}" class="d-flex justify-content-start mr-auto">ThisIsNews.com</b-navbar-brand>
         <b-navbar-toggle target="nav-collapse" class="mr-4"></b-navbar-toggle>
@@ -31,7 +31,7 @@
                 </b-nav-item-dropdown>
             </b-navbar-nav>            
         </b-collapse>
-            <div class="fitter justify-content-end mx-2">&nbsp;</div>        
+            <div class="fitter fixed-top ml-auto mr-2">&nbsp;</div>        
     </b-navbar>
     </div>
 </template>

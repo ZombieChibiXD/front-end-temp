@@ -12,7 +12,7 @@
 
       <!-- Content -->
       <section> 
-        <div class="container application">
+        <div class="container-fluid">
           <router-view/>
         </div>
       </section>

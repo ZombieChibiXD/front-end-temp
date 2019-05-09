@@ -1,39 +1,4 @@
-<template>
-    <!-- <div class="container mt-5 mr-auto ml-auto" style="width:40rem; height:20rem;">
-        <div class="row">
-            <div class="col-8">
-                <div class="card text-left">
-                    <div class="card-body">
-                        <h5 class="card-title">Login</h5>
-                        <div>
-                            <form>
-                                <div class="form-group">
-                                    <label for="credential">Username / Email :</label>
-                                    <input type="text" name="credential" id="credential" class="form-control" placeholder="Username / Email" aria-describedby="credential">
-                                    <small id="credential" class="text-danger" hidden>Please insert Username / Email</small>
-                                </div>
-                                <div class="form-group">
-                                    <label for="credential">Password :</label>
-                                    <input type="passport" name="password" id="password" class="form-control" placeholder="Password" aria-describedby="password">
-                                    <small id="credential" class="text-danger" hidden>Please insert password</small>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>                
-            </div>
-            <div class="col-4">
-                <div class="card text-left">
-                    <div>
-                        <h5 class="card-title">Login w/ Social Media</h5>
-                        <div class="card-body">
-                            <h5 class="display-5">Still Building</h5>
-                        </div>
-                    </div>
-                </div>                 
-            </div>            
-        </div>
-    </div> -->    
+<template>  
     <div class="container-fluid">
         <div class="mb-lg-5">&nbsp;</div>
         <div class="row mx-auto mt-lg-3 mt-md-4 mt-sm-5 py-auto">

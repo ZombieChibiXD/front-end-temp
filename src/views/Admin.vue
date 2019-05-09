@@ -1,5 +1,5 @@
 <template>
-  <div class="admin">
+  <div class="admin container">
       <div>&nbsp;</div>
       <b-button-group class="w-75 mx-auto">
           <router-link to="/admin/article/write" class="btn btn-lg btn-success">Write Article</router-link>
