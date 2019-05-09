@@ -1,9 +1,9 @@
 <template>
-    <div class="p-5">
+    <div class=" container p-2">
         <div class="headers">
             <h1 class="display-5">{{ article.title }}</h1>
             <div class="container-fluid">
-                <img class="mx-auto cover_image img-responsive" :src="article.cover_image" alt="">
+                <img class="mx-auto cover_image rounded img-responsive" :src="article.cover_image" alt="">
 
             </div>
             <hr>
@@ -32,7 +32,7 @@ export default {
             let vm = this;
             postService.getArticleId(id)
             .then(res => {
-                this.article = res;
+                vm.article = res;
             })
             .catch(err => console.log(err));
         },
@@ -45,6 +45,13 @@ export default {
 
 <style scoped>
 .cover_image{
-    max-height: 50vh;
+    height: 50vh;
+    -webkit-transition: height 1s ease; /* Safari */
+    transition: height 1s ease;
+}
+.cover_image:hover{
+    height: 80vh;
+    -webkit-transition: height 1s ease; /* Safari */
+    transition: height 1s ease;
 }
 </style>

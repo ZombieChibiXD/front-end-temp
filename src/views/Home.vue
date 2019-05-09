@@ -125,7 +125,7 @@ export default {
     }
   },
   created:function(){
-      this.fetchArticles(null,'new'); 
+      this.fetchArticles(null,'popular'); 
   },
 }
 </script>

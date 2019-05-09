@@ -10,19 +10,19 @@
             <b-navbar-nav class="w-75 justify-content-center mx-auto">
                 <b-nav-item :to="{ name: 'Tag',params: { tagname: 'new' } }" active-class='active disabled'>Newest</b-nav-item>
                 <b-nav-item :to="{ name: 'Tag',params: { tagname: 'popular' } }" active-class='active disabled'>Popular</b-nav-item>
-                <b-nav-item :to="{ name: 'Tag',params: { tagname: 'entertaiment' } }" active-class='active disabled'>Entertaiment</b-nav-item>
+                <b-nav-item :to="{ name: 'Tag',params: { tagname: 'entertainment' } }" active-class='active disabled'>Entertainment</b-nav-item>
                 <b-nav-item :to="{ name: 'Tag',params: { tagname: 'sports' } }" active-class='active disabled'>Sports</b-nav-item>
                 <b-nav-item :to="{ name: 'Tag',params: { tagname: 'lifestyle' } }" active-class='active disabled'>Lifestyle</b-nav-item>
                 <b-nav-item :to="{ name: 'Tag',params: { tagname: 'politic' } }" active-class='active disabled'>Politic</b-nav-item>
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->
-            <b-navbar-nav class="ml-auto">
+            <b-navbar-nav class="ml-auto mr-sm-4">
                 <b-nav-item v-if="isLogged === false" :to="{ name: 'Login' }" active-class="active disabled">Login</b-nav-item>
                 <b-nav-item v-if="isLogged === false" :to="{ name: 'Register' }" active-class="active disabled">Register</b-nav-item>
 
                 <!-- Modal Component -->
-                <b-nav-item-dropdown class="mr-3" v-if="isLogged === true" right >
+                <b-nav-item-dropdown class="" v-if="isLogged === true" right >
                 <!-- Using 'button-content' slot -->
                     <template v-if="isLogged === true" slot="button-content"><em>{{ UserData.name }}</em></template>
                     <b-dropdown-item v-if="isLogged === true" href="#"  >Profile</b-dropdown-item>

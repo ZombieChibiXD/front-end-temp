@@ -121,6 +121,9 @@ export default {
                     if(res.status == 422){
                         this.$swal('Post Failed','Post already exist!','error');
                     }
+                    else if(res.status == 401){
+                        this.$swal('Oops','This post does not belongs to you','error');
+                    }
                     else{
                         this.$swal('Oops','Post Failed','error');
                     }
