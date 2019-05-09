@@ -7,9 +7,9 @@
 
 <style scoped>
 footer {
-    background: tomato;
+    background: black;
     color: #fff;
-    padding-top: 35vh;
+    padding-top: 100vh;
     vertical-align: middle;
     position: fixed;
     bottom: 0;

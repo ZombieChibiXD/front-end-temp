@@ -49,7 +49,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import userStorage from '@/_services/user.service'
 export default {
     props: {
-      article_id_route: String
+      article_id_route: Number
     },
     components:{
          ckeditor : CKEditor.component
@@ -157,7 +157,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @media (min-width: 768px) {
      document-editor{
           width: 200px;

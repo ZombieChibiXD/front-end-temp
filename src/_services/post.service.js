@@ -81,8 +81,6 @@ function Post(){
             .then(response=>{
                 var outs = response.data.data;
                 outs.cover_image = Configuration.serverLocation + 'img/cover_images/'+outs.cover_image;
-                console.log(outs);
-                
                 resolve(outs);
             })
             .catch(response=>{

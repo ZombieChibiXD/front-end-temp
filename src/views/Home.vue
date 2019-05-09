@@ -77,7 +77,7 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 
 import postService from '@/_services/post.service'
 

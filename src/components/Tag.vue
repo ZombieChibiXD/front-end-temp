@@ -2,16 +2,18 @@
     <div>
         <!-- <h1>Menampilkan Berita : {{ caps(tagname) }}</h1>
         <hr> -->
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" @click="fetchArticles(pagination.prev_page_url)">Previous</a></li>
+        <div class="pager justify-content-center py-2">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center mx-auto">
+                    <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item"><button class="page-link" v-on:click="fetchArticles(pagination.prev_page_url)">Previous</button></li>
 
-                <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
-            
-                <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item"><a class="page-link" href="#" @click="fetchArticles(pagination.next_page_url)">Next</a></li>
-            </ul>
-        </nav>
-        <div class="row py-5">
+                    <li class="page-item disabled"><a class="page-link text-dark">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
+                
+                    <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item"><button class="page-link" v-on:click="fetchArticles(pagination.next_page_url)">Next</button></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="row py-2">
             <!-- SideBar -->
             <div class="col-sm-5 col-xs-12 py-0  sidebar">
                 <div class="article-list border mb-3 p-1" v-for="(item, index) in articles.slice(0, 4)" :key="item.id" :index="index">
@@ -72,6 +74,8 @@ export default {
         return {
             articles:[],
             pagination: {},
+            page_loading:true,
+            page_error:false,
         }
     },
     methods:{
@@ -79,15 +83,20 @@ export default {
             return text.charAt(0).toUpperCase() + text.slice(1)
         },
         fetchArticles(page_url,tagnames) {
+            this.articles = [],
+            this.page_loading = true;
             let vm = this;
             postService.getArticleAll(page_url,tagnames)
             .then(res => {
                 this.articles = res.data;
-                console.log(this.articles);
-                
                 vm.makePagination(res.meta, res.links);
+                this.page_loading = false;
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err);
+                this.page_loading = false;
+                this.page_error=true;
+            });
         },
         makePagination(meta, links) {
             let pagination = {
@@ -114,7 +123,7 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
 .border-between > [class*='col-']:before {
    background: #e3e3e3;
    bottom: 0;

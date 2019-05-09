@@ -2,7 +2,10 @@
     <div class="p-5">
         <div class="headers">
             <h1 class="display-5">{{ article.title }}</h1>
-            <img class="mx-auto w-50" :src="article.cover_image" alt="">
+            <div class="container-fluid">
+                <img class="mx-auto cover_image img-responsive" :src="article.cover_image" alt="">
+
+            </div>
             <hr>
             <!-- <small class="mx-auto">Image description</small> -->
         </div>
@@ -17,7 +20,7 @@ import postService from '@/_services/post.service'
 export default {
     name: 'Content',
     props: {
-      article_id: String
+      article_id: Number
     },
     data(){
         return { 
@@ -39,3 +42,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.cover_image{
+    max-height: 50vh;
+}
+</style>

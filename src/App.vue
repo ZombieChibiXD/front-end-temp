@@ -1,18 +1,18 @@
 <template>
-  <div id="app">   
+  <div id="app">  
     <div class="main-container">
       <!-- Navbar -->
-      <div id="Nav">
+      <div id="Nav" class="nav-guard">
         <Navbar/>
       </div>
       <!-- ./Navbar -->
-      <div class="Messages">
+      <!-- <div class="Messages">
         <Messages lists="msgs" />
-      </div>
+      </div> -->
 
       <!-- Content -->
       <section> 
-        <div class="container">
+        <div class="container application">
           <router-view/>
         </div>
       </section>
@@ -60,9 +60,12 @@ body {
   z-index: 2; */
   /* padding-bottom: 5vh; height of your footer */ 
   width: 100%;
-  margin-bottom: 35vh;
+  margin-bottom: 90vh;
   position: relative;
   z-index: 2;
+}
+.nav-guard{
+  position: relative;
 }
 footer {
  position: absolute;
@@ -72,6 +75,9 @@ footer {
 .container{
   min-height: 91vh;
   background-color: rgb(255, 255, 255);
+}
+.application{
+  padding-bottom: 10vh;
 }
 /* End Costum CSS */
 

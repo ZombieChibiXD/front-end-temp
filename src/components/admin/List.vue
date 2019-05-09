@@ -1,7 +1,7 @@
 <template>
      <div class="container">
-         <div>&nbsp;</div>
-         <table class="table table-bordered table-striped table-inverse my-5 w-100">
+         <div class="table-responsive">
+         <table class="table table-bordered table-striped table-inverse my-5 w-md-100 userlist">
              <thead class="thead-inverse">
                  <tr>
                      <th width="5%">No</th>
@@ -24,21 +24,27 @@
                      </tr>
                  </tbody>
                  <tfoot>
-                    <tr>
+                    <tr v-if="page_loading || page_error || articles.length == 0">
                         <td colspan="5">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item"><a class="page-link" href="#" @click="fetchArticles(pagination.prev_page_url)">Previous</a></li>
-
-                                <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
-                            
-                                <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item"><a class="page-link" href="#" @click="fetchArticles(pagination.next_page_url)">Next</a></li>
-                            </ul>
-                        </nav>
+                            <p v-if="page_loading">Fetching Articles...</p>
+                            <p v-if="!page_error && !page_loading && articles.length == 0">There is no articles</p>
+                            <p v-if="page_error" class="text-danger">Error, could not fetch article. Please check your connection</p>
                         </td>
                     </tr>
                  </tfoot>
          </table>
+        <div v-if="page_loading || !articles.length==0" class="justify-content-center py-2">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center mx-auto">
+                    <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item"><button class="page-link" v-on:click="fetchArticles(pagination.prev_page_url)">Previous</button></li>
+
+                    <li class="page-item disabled"><a class="page-link text-dark">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
+                
+                    <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item"><button class="page-link" v-on:click="fetchArticles(pagination.next_page_url)">Next</button></li>
+                </ul>
+            </nav>
+        </div>
+         </div>
      </div>
 </template>
 
@@ -51,8 +57,10 @@ export default {
     },
     data(){
         return {
-            articles:[],
+            articles:['1'],
             pagination: {},
+            page_loading:true,
+            page_error:false,
         }
     },
     methods:{
@@ -60,15 +68,20 @@ export default {
             return text.charAt(0).toUpperCase() + text.slice(1)
         },
         fetchArticles(page_url,tagnames) {
+            this.articles = [],
+            this.page_loading = true;
             let vm = this;
             postService.getArticleAll(page_url,tagnames)
             .then(res => {
                 this.articles = res.data;
-                console.log(this.articles);
-                
                 vm.makePagination(res.meta, res.links);
+                this.page_loading = false;
             })
-            .catch(err => console.log(err));
+            .catch(err =>{ 
+                this.page_loading = false;
+                this.page_error=true;
+                console.log(err)
+            });
         },
         makePagination(meta, links) {
             let pagination = {
@@ -134,13 +147,9 @@ export default {
 }
 </script>
 
-<style>
-@media (min-width: 768px) {
-     document-editor{
-          width: 200px;
-     }
-     .ck-editor__editable_inline {
-     min-height: 300px;
-     }
+<style scoped>
+.userlist{
+    min-width: 800px;
 }
+
 </style>

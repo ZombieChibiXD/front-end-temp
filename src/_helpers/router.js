@@ -51,6 +51,11 @@ export const router = new Router({
       component: () => import(/* webpackChunkName: "about" */ '@/views/Admin.vue'),
       children: [
         {
+          path: 'index',
+          name: 'Admin.Index',
+          component: () => import(/* webpackChunkName: "Insert" */ '@/components/admin/Index.vue'),
+        },
+        {
           path: 'article/write',
           name: 'Admin.CreateArtikel',
           component: () => import(/* webpackChunkName: "Insert" */ '@/components/admin/Insert.vue'),
@@ -67,7 +72,10 @@ export const router = new Router({
           // when /user/:id/posts is matched
           path: 'article/:article_id_route/edit/',
           name: 'Admin.UpdateArticle',
-          props: true ,
+          props: route => ({
+            article_id_route: Number(route.params.article_id_route),
+            // more props
+          }),
           component: () => import(/* webpackChunkName: "about" */ '@/components/admin/Update.vue'),
         }
       ]
@@ -81,7 +89,10 @@ export const router = new Router({
     {
       path: '/article/:article_id',
       name: 'Content',
-      props: true ,
+      props: route => ({
+        article_id: Number(route.params.article_id),
+        // more props
+      }),
       component: () => import(/* webpackChunkName: "about" */ '@/components/Content.vue'),
     },
     { path: '*', redirect: '/' },
@@ -90,6 +101,12 @@ export const router = new Router({
   linkActiveClass: "active"
 })
 
+
+// function castRouteParams(route) {
+//   return {
+//     id: Number(route.params.id),
+//   };
+// }
 
 //Handle "restricted" pages
 // router.beforeEach((to, from, next) => {

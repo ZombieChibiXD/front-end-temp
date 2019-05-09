@@ -1,9 +1,10 @@
 <template>
     <div>
-    <b-navbar toggleable="lg" type="dark" class="navbars justify-content-center">
+    <div class="w-100 background-nav">&nbsp;</div>
+    <b-navbar toggleable="lg" type="dark" class="navbars justify-content-center" fixed="top">
+        <div class="fitter mx-2">&nbsp;</div>
         <b-navbar-brand :to="{name:'Home'}" class="d-flex justify-content-start mr-auto">ThisIsNews.com</b-navbar-brand>
-
-        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+        <b-navbar-toggle target="nav-collapse" class="mr-4"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" class="w-100" is-nav>
             <b-navbar-nav class="w-75 justify-content-center mx-auto">
@@ -21,15 +22,16 @@
                 <b-nav-item v-if="isLogged === false" :to="{ name: 'Register' }" active-class="active disabled">Register</b-nav-item>
 
                 <!-- Modal Component -->
-                <b-nav-item-dropdown v-if="isLogged === true" right >
+                <b-nav-item-dropdown class="mr-3" v-if="isLogged === true" right >
                 <!-- Using 'button-content' slot -->
                     <template v-if="isLogged === true" slot="button-content"><em>{{ UserData.name }}</em></template>
                     <b-dropdown-item v-if="isLogged === true" href="#"  >Profile</b-dropdown-item>
-                    <b-dropdown-item v-if="isLogged === true && UserData.level<2" :to="{ name:'Admin' }"  >Admin Page</b-dropdown-item>
+                    <b-dropdown-item v-if="isLogged === true && UserData.level<2" to="admin/index" >Admin Page</b-dropdown-item>
                     <b-dropdown-item v-if="isLogged === true" @click.prevent="signout">Sign Out</b-dropdown-item>
                 </b-nav-item-dropdown>
             </b-navbar-nav>            
         </b-collapse>
+            <div class="fitter justify-content-end mx-2">&nbsp;</div>        
     </b-navbar>
     </div>
 </template>
@@ -199,8 +201,20 @@ export default {
 </script>
 
 <style scoped>
+.background-nav{
+    background-color: white;
+    height: 10vh;
+}
+.fitter{
+    background-color: white;
+    height: 10vh;
+    margin: 0;
+    padding: 0;
+    width: 3px;
+}
 .navbars{
-    background-color: rgba(46, 241, 255, 0.61);
+    background-color: rgba(29, 29, 29, 0.842);
+    padding: 0;
 }
 .menus{
     position: absolute;
@@ -209,6 +223,7 @@ export default {
     text-align: center;
     
 }
+.sticky-top { top: 0.5em; }
 </style>
 
 
