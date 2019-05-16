@@ -9,16 +9,21 @@
             <hr>
             <!-- <small class="mx-auto">Image description</small> -->
         </div>
-        <div class="contents text-left my-5">
+        <div class="contents text-left my-2">
             <span v-html="article.body"></span>
         </div>
+        <comment :article_id=article_id></comment>
     </div>
 </template>
 
 <script>
+import Comment from '@/components/Comment.vue'
 import postService from '@/_services/post.service'
 export default {
     name: 'Content',
+    components:{
+        Comment
+    },
     props: {
       article_id: Number
     },

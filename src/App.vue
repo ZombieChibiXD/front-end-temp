@@ -20,6 +20,7 @@
 
       <!-- Footer -->
       <!-- ./Footer -->
+      <div class="my-5">&nbsp;</div>
     </div>
     <Footers />
 
@@ -87,10 +88,10 @@ footer {
 
 import Navbar from '@/components/layout/Navbar.vue'
 import Footers from '@/components/layout/Footers.vue'
-import Messages from '@/components/layout/Messages.vue'
+// import Messages from '@/components/layout/Messages.vue'
 export default {
   components:{
-    Navbar, Footers, Messages
+    Navbar, Footers, // Messages
   }
 }
 </script>

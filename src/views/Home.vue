@@ -8,8 +8,8 @@
       controls
       indicators
       background="#ababab"
-      img-width="1024"
-      img-height="480"
+      img-width="800"
+      img-height="360"
       style="text-shadow: 1px 1px 2px #333;"
       @sliding-start="onSlideStart"
       @sliding-end="onSlideEnd"
@@ -22,9 +22,9 @@
       >
         <img
           slot="img"
-          class="d-block img-responsive w-100"
-          width="1024"
-          height="400rem"
+          class="d-block img-responsive w-75 mx-auto"
+          width="800"
+          height="300rem"
           src="https://picsum.photos/1024/480/?image=52"
           alt="image slot"
         >
@@ -36,9 +36,9 @@
       >
         <img
           slot="img"
-          class="d-block img-responsive w-100"
-          width="1024"
-          height="400rem"
+          class="d-block img-responsive w-75 mx-auto"
+          width="800"
+          height="300rem"
           :src="article.cover_image"
           alt="image slot"
         >

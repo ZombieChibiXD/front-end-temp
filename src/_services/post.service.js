@@ -63,8 +63,8 @@ function Post(){
                 console.log(data_processed);
                 
                 for (let index = 0; index < response.data.data.length; index++) {
-                    data_processed.data[index].cover_image =    Configuration.serverLocation + 'img/cover_images/' + 
-                                                                response.data.data[index].cover_image;
+                    data_processed.data[index].cover_image =    Configuration.serverLocation + 
+                                                                Configuration.getCoverImg(response.data.data[index].cover_image);
                     
                 }
 
@@ -80,7 +80,8 @@ function Post(){
             Vue.prototype.$http.get(Configuration.serverLocation+Configuration.idArticle(id))
             .then(response=>{
                 var outs = response.data.data;
-                outs.cover_image = Configuration.serverLocation + 'img/cover_images/'+outs.cover_image;
+                outs.cover_image =  Configuration.serverLocation + 
+                                    Configuration.getCoverImg(outs.cover_image);
                 resolve(outs);
             })
             .catch(response=>{
